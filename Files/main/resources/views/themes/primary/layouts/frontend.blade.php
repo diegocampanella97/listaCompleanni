@@ -262,23 +262,6 @@
                     </div>
                     <div class="col-xl-3 col-sm-6 col-xsm-6">
                         <div class="footer-item">
-                            <h5 class="footer-item__title">@lang('Categories')</h5>
-
-                            @if (count($campCategories))
-                                <ul class="footer-menu">
-                                    @foreach ($campCategories as $campCategory)
-                                        <li class="footer-menu__item">
-                                            <a href="{{ route('campaign', ['category' => $campCategory->slug]) }}" class="footer-menu__link">
-                                                {{ __($campCategory->name) }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-sm-6 col-xsm-6">
-                        <div class="footer-item">
                             <h5 class="footer-item__title">@lang('Contact With Us')</h5>
                             <ul class="footer-contact-menu">
                                 @foreach ($footerContactElements as $footerContact)
