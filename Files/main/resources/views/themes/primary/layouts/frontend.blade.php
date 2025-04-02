@@ -4,6 +4,7 @@
     @php $languages = App\Models\Language::active()->get() @endphp
 @endif
 
+
 @section('content')
     <header class="header" id="header">
         <div class="container">
@@ -57,15 +58,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('faq') }}" class="nav-link">@lang('FAQ')</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('campaign') }}" class="nav-link">@lang('Campaigns')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('upcoming') }}" class="nav-link">@lang('Upcoming')</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('contact') }}" class="nav-link">@lang('Contact')</a>
-                            </li>
+
                         @else
                             @auth
                                 <li class="nav-item dropdown">
