@@ -34,7 +34,6 @@
         </div>
     </div>
 
-    @include($activeTheme . 'sections.volunteer')
-    @include($activeTheme . 'sections.donor')
+
     @include($activeTheme . 'sections.partner')
 @endsection
