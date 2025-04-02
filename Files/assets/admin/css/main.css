@@ -44,9 +44,9 @@
     --linkedin: var(--linkedin-h) var(--linkedin-s) var(--linkedin-l);
     /* ========================= Social Color End ============================= */
     /* ========================= Base Color ============================= */
-    --base-h: 262;
-    --base-s: 82%;
-    --base-l: 51%;
+    --base-h: 147;
+    --base-s: 100%;
+    --base-l: 30%;
     --base: var(--base-h) var(--base-s) var(--base-l);
     /* Base Darken  */
     --base-d-100: var(--base-h) var(--base-s) calc(var(--base-l) - var(--base-l) * 0.1);
