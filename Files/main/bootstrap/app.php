@@ -68,6 +68,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'maintenance'      => \App\Http\Middleware\MaintenanceMode::class,
             'register.status'  => \App\Http\Middleware\AllowRegistration::class,
             'authorize.status' => \App\Http\Middleware\AuthorizationStatus::class,
+            'block.routes' => \App\Http\Middleware\BlockRoutes::class,
         ]);
 
         $middleware->validateCsrfTokens(
