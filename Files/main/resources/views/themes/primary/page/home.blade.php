@@ -21,9 +21,6 @@
                                         <a href="{{ @$banner->data_info->first_button_url }}" class="btn btn--base" target="_blank">
                                             {{ __(@$banner->data_info->first_button_text) }}
                                         </a>
-                                        <a href="{{ @$banner->data_info->second_button_url }}" class="btn btn--base" target="_blank">
-                                            {{ __(@$banner->data_info->second_button_text) }}
-                                        </a>
                                     </div>
                                 </div>
                             </div>
