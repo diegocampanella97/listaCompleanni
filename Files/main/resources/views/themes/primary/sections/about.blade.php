@@ -21,20 +21,7 @@
                         <h2 class="section-heading__title">{{ __(@$aboutUsContent->data_info->heading) }}</h2>
                     </div>
                     <p class="about__desc">{{ __(@$aboutUsContent->data_info->description) }}</p>
-                    <div class="row about__card-row g-4">
-                        <div class="col-sm-6 col-xsm-6">
-                            <div class="about__card">
-                                <div class="counter">{{ $setting->cur_sym }}<span class="odometer" data-count="{{ $totalFundRaised }}">0</span></div>
-                                <span class="name">@lang('Total Fund Raised')</span>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-xsm-6">
-                            <div class="about__card">
-                                <div class="counter"><span class="odometer" data-count="{{ $totalCampaignCount }}">0</span>+</div>
-                                <span class="name">@lang('Total Campaigns')</span>
-                            </div>
-                        </div>
-                    </div>
+
                     <a href="{{ @$aboutUsContent->data_info->button_url }}" class="btn btn--base" target="_blank">
                         {{ __(@$aboutUsContent->data_info->button_text) }}
                     </a>
