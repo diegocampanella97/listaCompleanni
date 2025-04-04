@@ -7,18 +7,24 @@ Route::controller('WebsiteController')->group(function () {
     Route::get('about', 'aboutUs')->name('about.us');
     Route::get('faq', 'faq')->name('faq');
     
+    // Campaign 
+    Route::prefix('campaign/{slug}')->name('campaign.')->group(function () {
+        Route::get('/', 'campaignShow')->name('show');
+    });
+
     //Bloccare queste rotte
     Route::middleware('block.routes')->group(function () {
 
-        Route::get('volunteers', 'volunteers')->name('volunteers');
-        Route::get('campaigns', 'campaigns')->name('campaign');
-    
         // Campaign 
         Route::prefix('campaign/{slug}')->name('campaign.')->group(function () {
-            Route::get('/', 'campaignShow')->name('show');
+            
             Route::post('comment', 'storeCampaignComment')->name('comment');
             Route::get('fetch-comment', 'fetchCampaignComment')->name('comment.fetch');
         });
+
+        Route::get('volunteers', 'volunteers')->name('volunteers');
+        
+        Route::get('campaigns', 'campaigns')->name('campaign');
     
         Route::get('upcoming-campaigns', 'upcomingCampaigns')->name('upcoming');
         Route::get('upcoming-campaign/{slug}', 'upcomingCampaignShow')->name('upcoming.show');
