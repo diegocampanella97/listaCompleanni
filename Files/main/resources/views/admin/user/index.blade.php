@@ -107,6 +107,7 @@
 @endsection
 
 @push('breadcrumb')
+    <a href="{{ route('user.register', $user->id) }}" class="btn btn--sm btn-outline--base"><i class="ti ti-info-square-rounded"></i> @lang('Crea Nuovo Utente')</a>
     <x-searchForm placeholder="Username / Email" dateSearch="yes" />
 @endpush
     

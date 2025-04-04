@@ -18,6 +18,16 @@ class UserController extends Controller
         return view('admin.user.index', compact('pageTitle', 'users'));
     }
 
+    function create(){
+        $pageTitle = 'Create User';
+        $info            = json_decode(json_encode(getIpInfo()), true);
+        $mobileCode      = @implode(',', $info['code']);
+        $countries       = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $registerContent = getSiteData('register.content', true);
+        $policyPages     = getSiteData('policy_pages.element', false, null, true);
+        return view('admin.user.create', compact('pageTitle', 'mobileCode', 'countries', 'registerContent', 'policyPages')) ;
+    }
+
     function active() {
         $pageTitle = 'Active Users';
         $users     = $this->userData('active');
