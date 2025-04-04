@@ -62,7 +62,7 @@ class CampaignController extends Controller
         // Delete previously unused gallery images if exist
         $this->removePreviousGallery();
 
-        $pageTitle  = 'Create New Campaign';
+        $pageTitle  = 'Crea Nuova Campagna';
         $categories = Category::active()->get();
 
         return view($this->activeTheme . 'user.campaign.new', compact('pageTitle', 'categories'));
@@ -111,9 +111,9 @@ class CampaignController extends Controller
     function store() {
         $this->validate(request(), [
             'category_id'         => 'required|integer|gt:0',
-            'image'               => ['required', File::types(['png', 'jpg', 'jpeg'])],
+            //'image'               => ['required', File::types(['png', 'jpg', 'jpeg'])],
             'name'                => 'required|string|max:190|unique:campaigns,name',
-            'description'         => 'required|min:30',
+            'description'         => 'required|min:10',
             'document'            => ['nullable', File::types('pdf')],
             'goal_amount'         => 'required|numeric|gt:0',
             'preferred_amounts'   => 'required|array|min:1',
@@ -133,16 +133,10 @@ class CampaignController extends Controller
             return back()->withToasts($toast);
         }
 
-        $images = Gallery::where('user_id', auth()->id())->get();
-
-        if (!count($images)) {
-            $toast[] = ['error', 'Minimum one gallery image is required'];
-
-            return back()->withToasts($toast);
-        }
+        $images = [];
 
         // Gallery images
-        $gallery = [];
+        $gallery = ["67ebb9a27d77a1743501730.png"];
 
         foreach ($images as $image) array_push($gallery, $image->image);
 
@@ -150,15 +144,8 @@ class CampaignController extends Controller
         $campaign              = new Campaign();
         $campaign->user_id     = auth()->id();
         $campaign->category_id = request('category_id');
-
-        // Upload main image
-        try {
-            $campaign->image = fileUploader(request('image'), getFilePath('campaign'), getFileSize('campaign'), null, getThumbSize('campaign'));
-        } catch (Exception) {
-            $toast[] = ['error', 'Image uploading process has failed'];
-
-            return back()->withToasts($toast);
-        }
+        
+        $campaign->image='sample.png';
 
         $campaign->gallery     = $gallery;
         $campaign->name        = request('name');
@@ -181,6 +168,7 @@ class CampaignController extends Controller
         $campaign->preferred_amounts = request('preferred_amounts');
         $campaign->start_date        = Carbon::parse(request('start_date'));
         $campaign->end_date          = Carbon::parse(request('end_date'));
+        $campaign->status            = 1;
         $campaign->save();
 
         // Delete gallery images

@@ -7,38 +7,8 @@
                 <div class="col-lg-9">
                     <div class="custom--card">
                         <div class="card-body">
-                            <div class="row">
-                                {{-- dropzone start --}}
-                                <div class="col-12">
-                                    <label class="form--label required">@lang('Gallery')</label>
-                                </div>
-                                <form action="{{ route('user.campaign.gallery.upload') }}" method="POST" class="dropzone" enctype="multipart/form-data">
-                                    @csrf
-                                </form>
-                                <div class="col-12">
-                                    <span><em><small>*@lang('Supported files'): <span class="text--base fw-bold">@lang('jpeg'), @lang('jpg'), @lang('png')</span>. @lang('Image size'): <span class="text--base fw-bold">{{ getFileSize('campaign') }}@lang('px')</span>.</small></em></span>
-                                </div>
-                                {{-- dropzone end --}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="custom--card">
-                        <div class="card-body">
                             <form action="{{ route('user.campaign.store') }}" method="POST" class="row g-4" enctype="multipart/form-data">
                                 @csrf
-                                <div class="col-12">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <div class="upload__img mb-2 ms-auto">
-                                            <label for="imageUpload" class="form--label required">@lang('Campaign Image')</label>
-                                            <label for="imageUpload" class="upload__img__btn"><i class="ti ti-camera"></i></label>
-                                            <input type="file" id="imageUpload" name="image" required accept=".jpeg, .jpg, .png">
-                                            <div class="upload__img-preview image-preview">+</div>
-                                        </div>
-                                        <span><em><small><i class="ti ti-info-circle-filled me-1"></i>@lang('Supported files'): <span class="text--base fw-bold">@lang('jpeg'), @lang('jpg'), @lang('png')</span>. @lang('Image size'): <span class="text--base fw-bold">{{ getFileSize('campaign') }}@lang('px')</span>. @lang('Thumbnail size'): <span class="text--base fw-bold">{{ getThumbSize('campaign') }}@lang('px')</span>.</small></em></span>
-                                    </div>
-                                </div>
                                 <div class="col-12">
                                     <label class="form--label required">@lang('Name')</label>
                                     <div class="input--group">
@@ -73,13 +43,34 @@
                                     <div class="d-flex gap-2">
                                         <div class="input--group w-100">
                                             <span class="input-group-text">{{ @$setting->cur_sym }}</span>
-                                            <input type="number" step="any" min="0" class="form--control" name="preferred_amounts[]" value="" required>
+                                            <input type="number" step="any" min="0" class="form--control" name="preferred_amounts[]" value="20" required>
                                         </div>
                                         <a role="button" class="btn btn--base px-3 d-flex align-items-center" id="addMoreAmounts">
                                             <i class="ti ti-square-rounded-plus"></i>
                                         </a>
                                     </div>
-                                    <div class="add-more-amounts"></div>
+                                    <div class="add-more-amounts">
+                                        <div class="extra-amount d-flex gap-2 pt-2">
+                                            <div class="input--group w-100">
+                                                <span class="input-group-text">€</span>
+                                                <input type="number" value="50" step="any" min="0" class="form--control" name="preferred_amounts[]" required="" data-dashlane-rid="1be17ce0aea4e232" data-dashlane-classification="other">
+                                            </div>
+                                            <a role="button" class="btn btn--danger px-3 d-flex align-items-center close-extra-amount" data-dashlane-label="true" data-dashlane-rid="19266b263c2b78cd" data-dashlane-classification="other">
+                                                <i class="ti ti-square-rounded-minus"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="extra-amount d-flex gap-2 pt-2">
+                                            <div class="input--group w-100">
+                                                <span class="input-group-text">€</span>
+                                                <input type="number" value="100" step="any" min="0" class="form--control" name="preferred_amounts[]" required="" data-dashlane-rid="1be17ce0aea4e232" data-dashlane-classification="other">
+                                            </div>
+                                            <a role="button" class="btn btn--danger px-3 d-flex align-items-center close-extra-amount" data-dashlane-label="true" data-dashlane-rid="19266b263c2b78cd" data-dashlane-classification="other">
+                                                <i class="ti ti-square-rounded-minus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="form--label required">@lang('Start Date')</label>
