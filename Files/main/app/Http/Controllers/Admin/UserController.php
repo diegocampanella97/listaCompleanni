@@ -6,6 +6,7 @@ use App\Constants\ManageStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Deposit;
 use App\Models\Transaction;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,14 @@ class UserController extends Controller
 
         return view('admin.user.index', compact('pageTitle', 'users'));
     }
+
+    function createCampain($id) {
+        $user = User::findOrFail($id);
+        $pageTitle = 'Crea Campagna per ' . $user->firstname . " " . $user->lastname ;
+        $categories = Category::active()->get();
+        return view('admin.campaign.create', compact('pageTitle', 'categories', 'user'));
+    }
+
 
     function create(){
         $pageTitle = 'Create User';

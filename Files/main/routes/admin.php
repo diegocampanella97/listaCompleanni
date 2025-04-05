@@ -94,6 +94,8 @@ Route::middleware(['admin'])->group(function () {
 
         // User Details Operation
         Route::get('details/{id}', 'details')->name('details');
+        Route::get('details/{id}/createCampain', 'createCampain')->name('createCampain');
+
         Route::post('update/{id}', 'update')->name('update');
         Route::get('login/{id}', 'login')->name('login');
         Route::post('balance-update/{id}', 'balanceUpdate')->name('add.sub.balance');

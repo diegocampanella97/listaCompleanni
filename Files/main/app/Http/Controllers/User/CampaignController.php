@@ -108,7 +108,8 @@ class CampaignController extends Controller
         ]);
     }
 
-    function store() {
+    function store($user_id) {
+
         $this->validate(request(), [
             'category_id'         => 'required|integer|gt:0',
             //'image'               => ['required', File::types(['png', 'jpg', 'jpeg'])],
@@ -142,7 +143,7 @@ class CampaignController extends Controller
 
         // Store campaign data
         $campaign              = new Campaign();
-        $campaign->user_id     = auth()->id();
+        $campaign->user_id     = $user_id;
         $campaign->category_id = request('category_id');
         
         $campaign->image='sample.png';
@@ -169,6 +170,7 @@ class CampaignController extends Controller
         $campaign->start_date        = Carbon::parse(request('start_date'));
         $campaign->end_date          = Carbon::parse(request('end_date'));
         $campaign->status            = 1;
+
         $campaign->save();
 
         // Delete gallery images
@@ -183,7 +185,7 @@ class CampaignController extends Controller
 
         $toast[] = ['success', 'Campaign successfully created'];
 
-        return to_route('user.campaign.index')->withToasts($toast);
+        return to_route('admin.campaigns.details',['id' => $campaign->id])->withToasts($toast);
     }
 
     function edit($slug) {

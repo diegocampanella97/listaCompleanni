@@ -57,7 +57,7 @@ Route::middleware('auth')->name('user.')->namespace('User')->group(function () {
             Route::get('pending', 'pending')->name('pending');
             Route::get('rejected', 'rejected')->name('rejected');
             Route::get('new', 'new')->name('create');
-            Route::post('store', 'store')->name('store');
+            Route::post('store/{id_user}', 'store')->name('store');
             Route::get('edit/{slug}', 'edit')->name('edit');
             Route::post('image-remove/{id}', 'removeImage')->name('image.remove');
             Route::post('update/{id}', 'update')->name('update');
