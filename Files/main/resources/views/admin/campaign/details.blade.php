@@ -5,9 +5,6 @@
         <div class="custom--card h-auto mb-4">
             <div class="card-body">
                 <div class="campaign-details">
-                    <div class="campaign-details__img">
-                        <img src="{{ getImage(getFilePath('campaign') . '/' . $campaign->image, getFileSize('campaign')) }}" alt="Image">
-                    </div>
                     <div class="campaign-details__txt">
                         <h3 class="campaign-details__title">{{ __($campaign->name) }}</h3>
                         <div class="campaign-details__desc">
@@ -22,34 +19,57 @@
         </div>
         <div class="custom--card h-auto">
             <div class="card-header">
-                <h3 class="title">@lang('Comments')</h3>
+                <h3 class="title">Transazioni</h3>
             </div>
             <div class="card-body">
-                @if(count($comments))
-                    <div class="comment accordion custom--accordion" id="accordionExample">
-                        @foreach($comments as $comment)
-                            <div class="accordion-item" data-aos="fade-up" data-aos-duration="1500">
-                                <h2 class="accordion-header">
-                                    <button type="button" @class(['accordion-button', 'collapsed' => !$loop->first]) data-bs-toggle="collapse" data-bs-target="{{ '#comment-' . $loop->iteration }}" aria-expanded="{{ $loop->first ? 'true' : 'false' }}" aria-controls="{{ 'comment-' . $loop->iteration }}">
-                                        <span>
-                                            <span class="comment__name">{{ $comment->user ? $comment->user->fullname : $comment->name }}</span>
-                                            <span class="comment__date">{{ showDateTime($comment->created_at) }}</span>
+                @if(count($transactions))
+                    <div class="col-12">
+                        <table class="table table-borderless table--striped table--responsive--xl">
+                            <thead>
+                                <tr>
+                                    <th>@lang('User')</th>
+                                    <th>@lang('TRX')</th>
+                                    <th>@lang('Transacted')</th>
+                                    <th>@lang('Amount')</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($transactions as $transaction)
+                                <tr>
+                                    <td>
+                                        <div class="table-card-with-image">
+                                            <div class="table-card-with-image__img">
+                                                <img src="{{ getImage(getFilePath('userProfile') . '/' . @$transaction->user->image, getFileSize('userProfile'), true) }}"
+                                                    alt="Image">
+                                            </div>
+                                            <div class="table-card-with-image__content">
+                                                <p class="fw-semibold">{{ $transaction->full_name}}</p>
+                                                <p class="fw-semibold">
+                                                    {{ $transaction->email }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="fw-bold">{{ $transaction->trx }}</span></td>
+                                    <td>
+                                        <div>
+                                            <p>{{ showDateTime($transaction->created_at) }}</p>
+                                            <p>{{ diffForHumans($transaction->created_at) }}</p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="text--success">
+                                            {{showAmount($transaction->amount)}} {{ __($setting->site_cur)}}
                                         </span>
-                                    </button>
-                                    <button type="button" class="comment__delete decisionBtn" data-question="@lang('Do you want to delete this comment?')" data-action="{{ route('admin.comments.delete', $comment->id) }}"></button>
-                                </h2>
-                                <div id="{{ 'comment-' . $loop->iteration }}" @class(['accordion-collapse collapse', 'show' => $loop->first]) data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        <p>{{ __($comment->comment) }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                                    </td>
+                                </tr>
+                                @empty
+                                @include('admin.partials.noData')
+                                @endforelse
+                            </tbody>
+                        </table>
+                    
                     </div>
-
-                    @if ($comments->hasPages())
-                        {{ paginateLinks($comments) }}
-                    @endif
                 @else
                     @include('admin.partials.noData')
                 @endif
@@ -116,6 +136,7 @@
                         </tr>
                         <tr>
                             <td class="fw-semibold">@lang('Total Donor'):</td>
+                            
                             <td>{{ $totalDonor }}</td>
                         </tr>
                         <tr>

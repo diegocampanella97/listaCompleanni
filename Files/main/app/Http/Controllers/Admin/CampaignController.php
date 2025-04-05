@@ -70,10 +70,14 @@ class CampaignController extends Controller
         $pageTitle  = 'Campaign Details';
         $backRoute  = route('admin.campaigns.index');
         $campaign   = Campaign::findOrFail($id);
+
+        
         $totalDonor = $campaign->deposits()->done()->count();
+        //$transactions = $campaign->deposits()->done()->get()->dd();
+        $transactions = $campaign->deposits()->done()->get();
         $comments   = $campaign->comments()->with('user')->paginate(getPaginate());
 
-        return view('admin.campaign.details', compact('pageTitle', 'backRoute', 'campaign', 'comments', 'totalDonor'));
+        return view('admin.campaign.details', compact('pageTitle', 'backRoute', 'campaign', 'comments', 'totalDonor','transactions'));
     }
 
     function updateStatus($id, $type) {
