@@ -12,7 +12,7 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 
-class RegisterController extends Controller
+class RegisterControllerCustom extends Controller
 {
     use RegistersUsers;
 
@@ -61,7 +61,7 @@ class RegisterController extends Controller
         return $validate;
     }
 
-    function register() {
+    function registerCustom() {
         $this->validator(request()->all())->validate();
 
         request()->session()->regenerateToken();
@@ -113,11 +113,12 @@ class RegisterController extends Controller
         $user->country_code = $data['country_code'];
         $user->country_name = isset($data['country']) ? $data['country'] : null;
         $user->mobile       = $data['mobile_code'].$data['mobile'];
-        $user->kc           = $setting->kc ? ManageStatus::NO : ManageStatus::YES;
-        $user->ec           = $setting->ec ? ManageStatus::NO : ManageStatus::YES;
+        $user->kc           = 1;
+        $user->ec           = 1;
         $user->sc           = $setting->sc ? ManageStatus::NO : ManageStatus::YES;
         $user->ts           = ManageStatus::NO;
         $user->tc           = ManageStatus::YES;
+
         $user->save();
 
 
@@ -151,6 +152,8 @@ class RegisterController extends Controller
 
     function registered()
     {
-        return to_route('user.home');
+        return redirect()->route('admin.user.index')->with([
+            'success' => 'Registration successful. Please check your email for verification.',
+        ]);
     }
 }

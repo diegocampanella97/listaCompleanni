@@ -10,7 +10,7 @@
                     <div class="account-form__content mb-4">
                         <h3 class="account-form__title mb-2">{{ __(@$registerContent->data_info->form_heading) }}</h3>
                     </div>
-                    <form action="{{ route('user.register') }}" method="POST" class="verify-gcaptcha">
+                    <form action="{{ route('user.registerCustom') }}" method="POST" class="verify-gcaptcha">
                         @csrf
                         <div class="row g-3">
                             <div class="col-sm-6">

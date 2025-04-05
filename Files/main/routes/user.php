@@ -10,6 +10,13 @@ Route::namespace('User\Auth')->name('user.')->group(function () {
         Route::get('logout', 'logout')->middleware('auth')->name('logout');
     });
 
+    // User Registration Process Custom
+    Route::controller('RegisterControllerCustom')->group(function () {
+        Route::get('registerCustom', 'registerCustomForm')->name('registerCustom');
+        Route::post('registerCustom', 'registerCustom')->middleware('register.status');
+        Route::post('check-user', 'checkUser')->name('check.user');
+    });
+
     // User Registration Process
     Route::controller('RegisterController')->group(function () {
         Route::get('register', 'registerForm')->name('register');
