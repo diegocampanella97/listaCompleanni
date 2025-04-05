@@ -80,6 +80,7 @@ Route::middleware(['admin'])->group(function () {
     // User Management
     Route::controller('UserController')->name('user.')->prefix('user')->group(function() {
         Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
         Route::get('active', 'active')->name('active');
         Route::get('banned', 'banned')->name('banned');
         Route::get('kyc-pending', 'kycPending')->name('kyc.pending');
