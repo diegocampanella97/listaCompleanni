@@ -352,7 +352,11 @@
 @endsection
 
 @push('breadcrumb')
+<a href="{{ route('admin.user.createCampain',['id' => $user->id]) }}" class="btn btn--sm btn--base" >
+    Crea Campagna
+</a>
     <div class="custom--dropdown">
+
         <button class="btn btn--sm btn--icon btn--base" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="ti ti-dots-vertical"></i>
         </button>
