@@ -9,7 +9,6 @@
                         <h3 class="campaign-details__title">{{ __($campaign->name) }}</h3>
                         <div class="campaign-details__desc">
                             <h6>@lang('Description'):</h6>
-                            <div id="qrcode"></div>
                             <div class="description scroll">
                                 @php echo $campaign->description @endphp
                             </div>
@@ -83,6 +82,9 @@
                 <h3 class="title">@lang('Basic Information')</h3>
             </div>
             <div class="card-body">
+                <div class="d-flex justify-content-center my-5">
+                    <div id="qrcode"></div>
+                </div>
                 <table class="table table-flush">
                     <tbody>
                         <tr>
@@ -253,8 +255,8 @@
 
             new QRCode(document.getElementById("qrcode"), {
                 text: "{{ route('campaign.show', $campaign->slug) }}",
-                width: 200,
-                height: 200,
+                width: 300,
+                height: 300,
                 colorDark: "#000000",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
