@@ -30,6 +30,7 @@
                                     <th>@lang('User')</th>
                                     <th>@lang('TRX')</th>
                                     <th>@lang('Transacted')</th>
+                                    <th>@lang('Modalità di Pagamento')</th>
                                     <th>@lang('Amount')</th>
                                 </tr>
                             </thead>
@@ -56,6 +57,9 @@
                                             <p>{{ showDateTime($transaction->created_at) }}</p>
                                             <p>{{ diffForHumans($transaction->created_at) }}</p>
                                         </div>
+                                    </td>
+                                    <td>
+                                        {{ $transaction->gateway->name }}
                                     </td>
                                     <td>
                                         <span class="text--success">
@@ -85,7 +89,7 @@
                 <div class="d-flex justify-content-center my-5">
                     <div id="qrcode">
                         <div class="d-flex justify-content-center mb-2">
-                            <button id="printQrCode" class="btn btn--sm btn--base mt-3">@lang('Stampa Bigliettino QR')</button>
+                            <button id="printQrCode" class="btn btn--sm btn--base mt-3">@lang('Stampa Bigliettino QR'.$campaign->name)</button>
                         </div>
                     </div>
                 </div>
