@@ -83,7 +83,11 @@
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-center my-5">
-                    <div id="qrcode"></div>
+                    <div id="qrcode">
+                        <div class="d-flex justify-content-center mb-2">
+                            <button id="printQrCode" class="btn btn--sm btn--base mt-3">@lang('Stampa Bigliettino QR')</button>
+                        </div>
+                    </div>
                 </div>
                 <table class="table table-flush">
                     <tbody>
@@ -262,6 +266,36 @@
                 correctLevel: QRCode.CorrectLevel.H
             });
 
+            document.getElementById('printQrCode').addEventListener('click', function () {
+                const qrCodeElement = document.getElementById('qrcode');
+                const printCount = prompt("@lang('Quanti biglietti da visita vuoi stampare?')", 1);
+
+                if (printCount && !isNaN(printCount) && printCount > 0) {
+                    const printWindow = window.open('', '_blank');
+                    printWindow.document.write('<html><head><title>@lang("Print QR Code")</title>');
+                    printWindow.document.write('<style>');
+                    printWindow.document.write('body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }');
+                    printWindow.document.write('h4 { margin-bottom: 10px; font-size: 14px; }');
+                    printWindow.document.write('.qr-container { display: inline-block; width: 85mm; height: 55mm; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; margin: 10px; }');
+                    printWindow.document.write('.qr-container img { width: 100px; margin-bottom: 10px; }');
+                    printWindow.document.write('#printQrCode { display: none;}');
+                    printWindow.document.write('</style></head><body>');
+
+                    for (let i = 0; i < printCount; i++) {
+                        printWindow.document.write('<div class="qr-container">');
+                        printWindow.document.write('<img src="https://demoapplication.it/assets/universal/images/logoFavicon/logo_dark.png" alt="Logo">');
+                        printWindow.document.write('<h4>{{ __($campaign->name) }}</h4>');
+                        printWindow.document.write('<div style="display: flex; justify-content: center;">' + qrCodeElement.innerHTML + '</div>');
+                        printWindow.document.write('</div>');
+                    }
+
+                    printWindow.document.write('</body></html>');
+                    printWindow.document.close();
+                    printWindow.print();
+                } else {
+                    alert("@lang('Inserire un numero valido di biglietti da visita da stampare.')");
+                }
+            });
 
         })(jQuery)
     </script>
