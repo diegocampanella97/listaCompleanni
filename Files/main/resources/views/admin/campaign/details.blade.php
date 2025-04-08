@@ -91,10 +91,17 @@
                 <h3 class="title">@lang('Basic Information')</h3>
             </div>
             <div class="card-body">
-                <div class="d-flex justify-content-center my-5">
+                <div class="d-flex justify-content-center">
+                    <button id="sendWhatsappLink" class="btn btn--sm btn--success">
+                        <i class="ti ti-brand-whatsapp"></i> @lang('Invia Link su WhatsApp')
+                    </button>
+                </div>
+                <div class="d-flex justify-content-center mb-5">
                     <div id="qrcode">
                         <div class="d-flex justify-content-center mb-2">
-                            <button id="printQrCode" class="btn btn--sm btn--base mt-3">@lang('Stampa Bigliettino QR'.$campaign->name)</button>
+                            <button id="printQrCode" class="btn btn--sm btn--base mt-3">
+                                <i class="ti ti-printer"></i> @lang('Stampa Bigliettino QR'.$campaign->name)
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -323,6 +330,18 @@
                 printWindow.document.write('</body></html>');
                 printWindow.document.close();
                 printWindow.print();
+            });
+
+            document.getElementById('sendWhatsappLink').addEventListener('click', function () {
+                const phoneNumber = prompt("@lang('Inserisci il numero di telefono (con prefisso internazionale, es. +39)'):");
+                if (phoneNumber && phoneNumber.trim() !== '') {
+                    const campaignLink = "{{ route('campaign.show', $campaign->slug) }}";
+                    const whatsappMessage = encodeURIComponent("@lang('Ciao! Ecco il link per accedere alla campagna:') " + campaignLink);
+                    const whatsappUrl = `https://wa.me/${phoneNumber.replace(/\s+/g, '')}?text=${whatsappMessage}`;
+                    window.open(whatsappUrl, '_blank');
+                } else {
+                    alert("@lang('Per favore, inserisci un numero di telefono valido.')");
+                }
             });
 
         })(jQuery)
