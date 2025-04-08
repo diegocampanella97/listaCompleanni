@@ -18,67 +18,72 @@
             </div>
         </div>
         <div class="custom--card h-auto">
-            <div class="card-header">
-                <h3 class="title">Transazioni</h3>
+            <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="title">Transazioni</h3>
+            <button id="printTransactions" class="btn btn--sm btn--base">@lang('Stampa Transazioni')</button>
             </div>
             <div class="card-body">
-                @if(count($transactions))
-                    <div class="col-12">
-                        <table class="table table-borderless table--striped table--responsive--xl">
-                            <thead>
-                                <tr>
-                                    <th>@lang('User')</th>
-                                    <th>@lang('TRX')</th>
-                                    <th>@lang('Transacted')</th>
-                                    <th>@lang('Modalità di Pagamento')</th>
-                                    <th>@lang('Amount')</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($transactions as $transaction)
-                                <tr>
-                                    <td>
-                                        <div class="table-card-with-image">
-                                            <div class="table-card-with-image__img">
-                                                <img src="{{ getImage(getFilePath('userProfile') . '/' . @$transaction->user->image, getFileSize('userProfile'), true) }}"
-                                                    alt="Image">
-                                            </div>
-                                            <div class="table-card-with-image__content">
-                                                <p class="fw-semibold">{{ $transaction->full_name}}</p>
-                                                <p class="fw-semibold">
-                                                    {{ $transaction->email }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="fw-bold">{{ $transaction->trx }}</span></td>
-                                    <td>
-                                        <div>
-                                            <p>{{ showDateTime($transaction->created_at) }}</p>
-                                            <p>{{ diffForHumans($transaction->created_at) }}</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {{ $transaction->gateway->name }}
-                                    </td>
-                                    <td>
-                                        <span class="text--success">
-                                            {{showAmount($transaction->amount)}} {{ __($setting->site_cur)}}
-                                        </span>
-                                    </td>
-                                </tr>
-                                @empty
-                                @include('admin.partials.noData')
-                                @endforelse
-                            </tbody>
-                        </table>
-                    
-                    </div>
-                @else
+            @if(count($transactions))
+                <div class="col-12" id="transactionsTable">
+                <table class="table table-borderless table--striped table--responsive--xl">
+                    <thead>
+                    <tr>
+                        <th>@lang('User')</th>
+                        <th>@lang('TRX')</th>
+                        <th>@lang('Transacted')</th>
+                        <th>@lang('Modalità di Pagamento')</th>
+                        <th>@lang('Amount')</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse ($transactions as $transaction)
+                    <tr>
+                        <td>
+                        <div class="table-card-with-image">
+                            <div class="table-card-with-image__img">
+                            <img src="{{ getImage(getFilePath('userProfile') . '/' . @$transaction->user->image, getFileSize('userProfile'), true) }}"
+                                alt="Image">
+                            </div>
+                            <div class="table-card-with-image__content">
+                            <p class="fw-semibold">{{ $transaction->full_name}}</p>
+                            <p class="fw-semibold">
+                                {{ $transaction->email }}
+                            </p>
+                            </div>
+                        </div>
+                        </td>
+                        <td><span class="fw-bold">{{ $transaction->trx }}</span></td>
+                        <td>
+                        <div>
+                            <p>{{ showDateTime($transaction->created_at) }}</p>
+                            <p>{{ diffForHumans($transaction->created_at) }}</p>
+                        </div>
+                        </td>
+                        <td>
+                        {{ $transaction->gateway->name }}
+                        </td>
+                        <td>
+                        <span class="text--success">
+                            {{showAmount($transaction->amount)}} {{ __($setting->site_cur)}}
+                        </span>
+                        </td>
+                    </tr>
+                    @empty
                     @include('admin.partials.noData')
-                @endif
+                    @endforelse
+                    </tbody>
+                </table>
+                
+                </div>
+            @else
+                @include('admin.partials.noData')
+            @endif
             </div>
         </div>
+
+        <script>
+
+        </script>
     </div>
     <div class="col-xl-4 col-lg-5">
         <div class="custom--card h-auto mb-4">
@@ -299,6 +304,25 @@
                 } else {
                     alert("@lang('Inserire un numero valido di biglietti da visita da stampare.')");
                 }
+            });
+
+            document.getElementById('printTransactions').addEventListener('click', function () {
+                const transactionsTable = document.querySelector('#transactionsTable table').outerHTML;
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write('<html><head><title>@lang("Stampa Transazioni - " . $campaign->name)</title>');
+                printWindow.document.write('<style>');
+                printWindow.document.write('img { display:none; }');
+                printWindow.document.write('body { font-family: Arial, sans-serif; margin: 20px; font-size: 10px; }');
+                printWindow.document.write('table { font-size: 12px; width: 100%; border-collapse: collapse; margin-bottom: 20px; }');
+                printWindow.document.write('th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }');
+                printWindow.document.write('th { background-color: #f2f2f2; }');
+                printWindow.document.write('</style></head><body>');
+                printWindow.document.write('<img style="display:inline; width:150px" src="https://demoapplication.it/assets/universal/images/logoFavicon/logo_dark.png" alt="Logo">');
+                printWindow.document.write('<h3>@lang("Transazioni")</h3>');
+                printWindow.document.write(transactionsTable);
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                printWindow.print();
             });
 
         })(jQuery)
