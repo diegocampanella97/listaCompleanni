@@ -100,7 +100,7 @@
                     <div id="qrcode">
                         <div class="d-flex justify-content-center mb-2">
                             <button id="printQrCode" class="btn btn--sm btn--base mt-3">
-                                <i class="ti ti-printer"></i> @lang('Stampa Bigliettino QR'.$campaign->name)
+                                <i class="ti ti-printer"></i> @lang('Stampa Bigliettino QR: '.$campaign->name)
                             </button>
                         </div>
                     </div>
