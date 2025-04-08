@@ -9,6 +9,7 @@
                         <h3 class="campaign-details__title">{{ __($campaign->name) }}</h3>
                         <div class="campaign-details__desc">
                             <h6>@lang('Description'):</h6>
+                            <div id="qrcode"></div>
                             <div class="description scroll">
                                 @php echo $campaign->description @endphp
                             </div>
@@ -240,15 +241,26 @@
 
 @push('page-script-lib')
     <script src="{{ asset('assets/admin/js/page/pdfobject.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
 @endpush
 
 @push('page-script')
     <script>
         (function ($) {
             "use strict"
-
             let pdfFIle = $('.campaign-details-doc').attr('data')
-            PDFObject.embed(pdfFIle, '.campaign-details-doc')
+            PDFObject.embed(pdfFIle, '.campaign-details-doc');
+
+            new QRCode(document.getElementById("qrcode"), {
+                text: "{{ route('campaign.show', $campaign->slug) }}",
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+
         })(jQuery)
     </script>
 @endpush

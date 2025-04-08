@@ -88,7 +88,7 @@ class WebsiteController extends Controller
 
     function campaignShow($slug) {
         $pageTitle        = 'Campaign Details';
-        $campaignData     = Campaign::where('slug', $slug)->campaignCheck()->approve()->firstOrFail();
+        $campaignData     = Campaign::where('slug', 'LIKE',$slug)->firstOrFail();
         $comments         = Comment::with('user')->where('campaign_id', $campaignData->id)->approve()->latest()->limit(6)->get();
         $commentCount     = Comment::where('campaign_id', $campaignData->id)->approve()->count();
         $authUser         = auth()->user();
