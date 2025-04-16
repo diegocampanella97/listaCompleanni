@@ -20,17 +20,6 @@
                     <ul class="navbar-nav nav-menu ms-auto align-items-lg-center">
                         <li class="nav-item d-block d-lg-none">
                             <div class="top-button d-flex flex-wrap justify-content-between align-items-center">
-                                @if ($setting->language)
-                                    <div class="language-box">
-                                        <select class="select form--control form-select langSel">
-                                            @foreach ($languages as $language)
-                                                <option value="{{ $language->code }}" @selected(session('lang') == $language->code)>
-                                                    {{ __($language->name) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endif
 
                                 <ul class="login-registration-list d-flex flex-wrap align-items-center">
                                     <li class="login-registration-list__item">
@@ -136,17 +125,7 @@
                                     <a href="{{ route('user.login.form') }}" class="btn btn--sm btn--base">@lang('Login')</a>
                                 @endauth
 
-                                @if ($setting->language)
-                                    <div class="language-box language-box-web">
-                                        <select class="select form--control form-select langSel">
-                                            @foreach ($languages as $language)
-                                                <option value="{{ $language->code }}" @selected(session('lang') == $language->code)>
-                                                    {{ __($language->name) }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endif
+
                             </div>
                         </li>
                     </ul>
