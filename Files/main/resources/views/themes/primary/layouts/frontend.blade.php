@@ -71,47 +71,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown-menu__list">
-                                            <a href="{{ route('user.campaign.create') }}" class="dropdown-menu__link">@lang('Create Campaign')</a>
-                                        </li>
-                                        <li class="dropdown-menu__list">
                                             <a href="{{ route('user.campaign.index') }}" class="dropdown-menu__link">@lang('All Campaigns')</a>
-                                        </li>
-                                        <li class="dropdown-menu__list">
-                                            <a href="{{ route('user.campaign.approved') }}" class="dropdown-menu__link">@lang('Approved Campaigns')</a>
-                                        </li>
-                                        <li class="dropdown-menu__list">
-                                            <a href="{{ route('user.campaign.pending') }}" class="dropdown-menu__link">@lang('Pending Campaigns')</a>
-                                        </li>
-                                        <li class="dropdown-menu__list">
-                                            <a href="{{ route('user.campaign.rejected') }}" class="dropdown-menu__link">@lang('Rejected Campaigns')</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        @lang('Donations')
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-menu__list">
-                                            <a href="{{ route('user.donation.history') }}" class="dropdown-menu__link">@lang('My Donations')</a>
-                                        </li>
-                                        <li class="dropdown-menu__list">
-                                            <a href="{{ route('user.donation.received') }}" class="dropdown-menu__link">@lang('Received Donations')</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        @lang('Withdraw')
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-menu__list">
-                                            <a href="{{ route('user.withdraw.methods') }}" class="dropdown-menu__link">@lang('Withdraw Money')</a>
-                                        </li>
-                                        <li class="dropdown-menu__list">
-                                            <a href="{{ route('user.withdraw.index') }}" class="dropdown-menu__link">@lang('Withdraw History')</a>
                                         </li>
                                     </ul>
                                 </li>
