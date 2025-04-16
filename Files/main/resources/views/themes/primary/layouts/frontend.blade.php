@@ -58,6 +58,10 @@
                             <li class="nav-item">
                                 <a href="{{ route('faq') }}" class="nav-link">@lang('FAQ')</a>
                             </li>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('contact') }}" class="nav-link">@lang('Contacts')</a>
+                            </li>
 
                         @else
                             @auth

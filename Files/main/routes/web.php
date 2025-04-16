@@ -12,6 +12,10 @@ Route::controller('WebsiteController')->group(function () {
         Route::get('/', 'campaignShow')->name('show');
     });
 
+    // Contact
+    Route::get('contact', 'contact')->name('contact');
+    Route::post('contact', 'contactStore');
+
     //Bloccare queste rotte
     Route::middleware('block.routes')->group(function () {
 
@@ -36,9 +40,6 @@ Route::controller('WebsiteController')->group(function () {
         // Subscriber
         Route::post('subscriber/store', 'subscriberStore')->name('subscriber.store');;
     
-        // Contact
-        Route::get('contact', 'contact')->name('contact');
-        Route::post('contact', 'contactStore');
     });
 
 
