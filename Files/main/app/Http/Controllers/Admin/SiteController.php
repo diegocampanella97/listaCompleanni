@@ -11,8 +11,7 @@ use Illuminate\Validation\Rules\File;
 class SiteController extends Controller
 {
     function themes() {
-        $pageTitle  = 'Themes';
-        $themePaths = array_filter(glob('main/resources/views/themes/*'), 'is_dir');
+$pageTitle  = 'Temi';        $themePaths = array_filter(glob('main/resources/views/themes/*'), 'is_dir');
 
         foreach ($themePaths as $key => $theme) {
             $arr                   = explode('/', $theme);

@@ -20,8 +20,7 @@ use Illuminate\Support\Facades\Validator;
 class WebsiteController extends Controller
 {
     function home() {
-        $pageTitle               = 'Home';
-        $bannerElements          = getSiteData('banner.element', false, null, true);
+$pageTitle               = 'Casa';        $bannerElements          = getSiteData('banner.element', false, null, true);
         $basicCampaignQuery      = Campaign::campaignCheck()->approve();
         $featuredCampaignContent = getSiteData('featured_campaign.content', true);
         $featuredCampaigns       = (clone $basicCampaignQuery)->featured()->latest()->limit(6)->get();
@@ -40,31 +39,27 @@ class WebsiteController extends Controller
     }
 
     function volunteers() {
-        $pageTitle         = 'Volunteers';
-        $volunteerElements = SiteData::where('data_key', 'volunteer.element')->paginate(getPaginate());
+$pageTitle         = 'Volontari';        $volunteerElements = SiteData::where('data_key', 'volunteer.element')->paginate(getPaginate());
 
         return view($this->activeTheme . 'page.volunteer', compact('pageTitle', 'volunteerElements'));
     }
 
     function aboutUs() {
-        $pageTitle          = 'About Us';
-        $clientContent      = getSiteData('client_review.content', true);
+$pageTitle          = 'Chi siamo';        $clientContent      = getSiteData('client_review.content', true);
         $clientElements     = getSiteData('client_review.element', false, null, true);
 
         return view($this->activeTheme . 'page.about', compact('pageTitle', 'clientContent', 'clientElements'));
     }
 
     function faq() {
-        $pageTitle   = 'FAQ';
-        $faqContent  = getSiteData('faq.content', true);
+$pageTitle   = 'FAQ';        $faqContent  = getSiteData('faq.content', true);
         $faqElements = getSiteData('faq.element', false, null, true);
 
         return view($this->activeTheme . 'page.faq', compact('pageTitle', 'faqContent', 'faqElements'));
     }
 
     function campaigns() {
-        $pageTitle  = 'Campaigns';
-        $categories = Category::active()->select('name', 'slug')->get();
+$pageTitle  = 'Campagne';        $categories = Category::active()->select('name', 'slug')->get();
         $campaigns  = Campaign::when(request()->filled('category'), function ($query) {
                                     $categorySlug = request('category');
                                     $category     = Category::where('slug', $categorySlug)->active()->first();
@@ -87,8 +82,7 @@ class WebsiteController extends Controller
     }
 
     function campaignShow($slug) {
-        $pageTitle        = 'Campaign Details';
-        $campaignData     = Campaign::where('slug', 'LIKE',$slug)->firstOrFail();
+$pageTitle        = 'Dettagli della campagna';        $campaignData     = Campaign::where('slug', 'LIKE',$slug)->firstOrFail();
         $comments         = Comment::with('user')->where('campaign_id', $campaignData->id)->approve()->latest()->limit(6)->get();
         $commentCount     = Comment::where('campaign_id', $campaignData->id)->approve()->count();
         $authUser         = auth()->user();
@@ -247,8 +241,7 @@ class WebsiteController extends Controller
     }
 
     function upcomingCampaigns() {
-        $pageTitle         = 'Upcoming Campaigns';
-        $upcomingCampaigns = Campaign::when(request()->filled('category'), function ($query) {
+$pageTitle         = 'Campagne imminenti';        $upcomingCampaigns = Campaign::when(request()->filled('category'), function ($query) {
                                 $categorySlug = request('category');
                                 $category     = Category::where('slug', $categorySlug)->active()->first();
 
@@ -266,8 +259,7 @@ class WebsiteController extends Controller
     }
 
     function upcomingCampaignShow($slug) {
-        $pageTitle    = 'Upcoming Campaign Details';
-        $campaignData = Campaign::where('slug', $slug)->upcomingCheck()->approve()->firstOrFail();
+$pageTitle    = 'Dettagli della campagna imminenti';        $campaignData = Campaign::where('slug', $slug)->upcomingCheck()->approve()->firstOrFail();
 
         $seoContents['keywords']           = $campaignData->meta_keywords ?? [];
         $seoContents['social_title']       = $campaignData->name;
@@ -288,16 +280,14 @@ class WebsiteController extends Controller
     }
 
     function stories() {
-        $pageTitle       = 'Success Stories';
-        $successElements = SiteData::where('data_key', 'success_story.element')->paginate(getPaginate());
+$pageTitle       = 'Storie di successo';        $successElements = SiteData::where('data_key', 'success_story.element')->paginate(getPaginate());
 
 
         return view($this->activeTheme . 'page.stories', compact('pageTitle', 'successElements'));
     }
 
     function storyShow($id) {
-        $pageTitle = 'Story Details';
-        $storyData = SiteData::findOrFail($id);
+$pageTitle = 'Dettagli della storia';        $storyData = SiteData::findOrFail($id);
 
         $seoContents['keywords']           = $storyData->data_info->meta_keywords ?? [];
         $seoContents['social_title']       = $storyData->data_info->title;
@@ -313,8 +303,7 @@ class WebsiteController extends Controller
     }
 
     function contact() {
-        $pageTitle       = 'Contact';
-        $user            = auth()->user();
+$pageTitle       = 'Contatto';        $user            = auth()->user();
         $contactContent  = getSiteData('contact_us.content', true);
         $contactElements = getSiteData('contact_us.element', false, null, true);
 
@@ -366,8 +355,7 @@ class WebsiteController extends Controller
     }
 
     function cookiePolicy() {
-        $pageTitle = 'Cookie Policy';
-        $cookie    = SiteData::where('data_key', 'cookie.data')->first();
+$pageTitle = 'Politica sui cookie';        $cookie    = SiteData::where('data_key', 'cookie.data')->first();
 
         return view($this->activeTheme . 'page.cookie',compact('pageTitle', 'cookie'));
     }

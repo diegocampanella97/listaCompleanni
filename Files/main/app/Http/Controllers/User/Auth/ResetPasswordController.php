@@ -11,8 +11,7 @@ use Illuminate\Validation\Rules\Password;
 class ResetPasswordController extends Controller
 {
     function resetForm($verCode = null) {
-        $pageTitle            = 'Account Recovery';
-        $email                = session('fpass_email');
+$pageTitle            = 'Recupero dell'account';        $email                = session('fpass_email');
         $passwordResetContent = getSiteData('password_reset.content', true);
 
         if (PasswordReset::where('code', $verCode)->where('email', $email)->count() != 1) {

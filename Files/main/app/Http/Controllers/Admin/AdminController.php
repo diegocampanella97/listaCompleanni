@@ -19,8 +19,7 @@ use Illuminate\Validation\Rules\Password;
 class AdminController extends Controller
 {
     function dashboard() {
-        $pageTitle     = 'Dashboard';
-        $latestUsers   = User::active()->latest()->limit(6)->get();
+$pageTitle     = 'Pannello di controllo';        $latestUsers   = User::active()->latest()->limit(6)->get();
         $admin         = Admin::first();
         $passwordAlert = false;
 
@@ -106,8 +105,7 @@ class AdminController extends Controller
     }
 
     function profile() {
-        $pageTitle = 'Profile';
-        $admin     = auth('admin')->user();
+$pageTitle = 'Profilo';        $admin     = auth('admin')->user();
         return view('admin.page.profile', compact('pageTitle', 'admin'));
     }
 
@@ -172,8 +170,7 @@ class AdminController extends Controller
 
     function notificationAll() {
         $notifications = AdminNotification::with('user')->orderBy('is_read')->paginate(getPaginate());
-        $pageTitle     = 'Notifications';
-
+$pageTitle     = 'Notifiche';
         return view('admin.page.notification',compact('pageTitle','notifications'));
     }
 
@@ -216,8 +213,7 @@ class AdminController extends Controller
     }
 
     function transaction() {
-        $pageTitle    = 'Transactions';
-        $remarks      = Transaction::distinct('remark')->orderBy('remark')->get('remark');
+$pageTitle    = 'Transazioni';        $remarks      = Transaction::distinct('remark')->orderBy('remark')->get('remark');
         $transactions = Transaction::with('user')
             ->searchable(['trx', 'user:username'])
             ->filter(['remark'])

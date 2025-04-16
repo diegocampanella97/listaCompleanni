@@ -10,8 +10,7 @@ use App\Notify\Sms;
 class NotificationController extends Controller
 {
     function universal() {
-        $pageTitle = 'Universal Template for Notification';
-        return view('admin.notification.universalTemplate',compact('pageTitle'));
+$pageTitle = 'Modello universale per la notifica';        return view('admin.notification.universalTemplate',compact('pageTitle'));
     }
 
     function universalUpdate() {
@@ -34,8 +33,7 @@ class NotificationController extends Controller
     }
 
     function templates() {
-        $pageTitle = 'Notification Templates';
-        $templates = NotificationTemplate::orderBy('name')->get();
+$pageTitle = 'Modelli di notifica';        $templates = NotificationTemplate::orderBy('name')->get();
 
         return view('admin.notification.templates',compact('pageTitle','templates'));
     }
@@ -67,8 +65,7 @@ class NotificationController extends Controller
     }
 
     function email() {
-        $pageTitle = 'Email Notification Settings';
-        return view('admin.notification.email', compact('pageTitle'));
+$pageTitle = 'Impostazioni di notifica e -mail';        return view('admin.notification.email', compact('pageTitle'));
     }
 
     function emailUpdate() {
@@ -153,8 +150,7 @@ class NotificationController extends Controller
     }
 
     function sms() {
-        $pageTitle = 'SMS Notification Settings';
-        return view('admin.notification.sms', compact('pageTitle'));
+$pageTitle = 'Impostazioni di notifica SMS';        return view('admin.notification.sms', compact('pageTitle'));
     }
 
     function smsUpdate() {

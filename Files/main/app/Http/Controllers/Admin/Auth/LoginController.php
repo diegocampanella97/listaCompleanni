@@ -14,8 +14,7 @@ class LoginController extends Controller
     /* Show the application's login form */
 
     function loginForm() {
-        $pageTitle = 'Admin Login';
-        return view('admin.auth.login', compact('pageTitle'));
+$pageTitle = 'Accesso amministratore';        return view('admin.auth.login', compact('pageTitle'));
     }
 
     /* Get the guard to be used during authentication */

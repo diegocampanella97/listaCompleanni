@@ -9,8 +9,7 @@ use App\Models\User;
 class ForgotPasswordController extends Controller
 {
     function requestForm() {
-        $pageTitle = 'Forgot Password';
-        $forgotPasswordContent = getSiteData('forgot_password.content', true);
+$pageTitle = 'Ha dimenticato la password';        $forgotPasswordContent = getSiteData('forgot_password.content', true);
 
         return view($this->activeTheme . 'user.auth.password.email', compact('pageTitle', 'forgotPasswordContent'));
     }
@@ -69,8 +68,7 @@ class ForgotPasswordController extends Controller
     }
 
     function verificationForm() {
-        $pageTitle = 'Code Verification';
-        $email     = session()->get('user_pass_res_email');
+$pageTitle = 'Verifica del codice';        $email     = session()->get('user_pass_res_email');
 
         if (!$email) {
             $toast[] = ['error','Oops! session expired'];

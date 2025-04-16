@@ -9,8 +9,7 @@ use App\Models\AdminPasswordReset;
 class ForgotPasswordController extends Controller
 {
     function requestForm() {
-        $pageTitle = 'Forgot Password';
-        return view('admin.auth.passRequest', compact('pageTitle'));
+$pageTitle = 'Ha dimenticato la password';        return view('admin.auth.passRequest', compact('pageTitle'));
     }
 
     function sendResetCode() {
@@ -55,8 +54,7 @@ class ForgotPasswordController extends Controller
     }
 
     function verificationForm() {
-        $pageTitle = 'Code Verification';
-        $email     = session()->get('pass_res_email');
+$pageTitle = 'Verifica del codice';        $email     = session()->get('pass_res_email');
 
         if (!$email) {
             $toast[] = ['error','Oops! session expired'];

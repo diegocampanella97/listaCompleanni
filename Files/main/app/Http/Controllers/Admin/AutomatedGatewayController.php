@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class AutomatedGatewayController extends Controller
 {
     function index() {
-        $pageTitle = 'Automated Gateways';
-        $gateways = Gateway::automated()->with('currencies')->get()->sortBy('alias');
+$pageTitle = 'Gateway automatizzati';        $gateways = Gateway::automated()->with('currencies')->get()->sortBy('alias');
         return view('admin.gateways.automated.index', compact('pageTitle', 'gateways'));
     }
 

@@ -17,29 +17,25 @@ use Illuminate\Support\Facades\Validator;
 class CampaignController extends Controller
 {
     function index() {
-        $pageTitle = 'All Campaigns';
-        $campaigns = $this->campaignData();
+$pageTitle = 'Tutte le campagne';        $campaigns = $this->campaignData();
 
         return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function approved() {
-        $pageTitle = 'Approved Campaigns';
-        $campaigns = $this->campaignData('approve');
+$pageTitle = 'Campagne approvate';        $campaigns = $this->campaignData('approve');
 
         return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function pending() {
-        $pageTitle = 'Pending Campaigns';
-        $campaigns = $this->campaignData('pending');
+$pageTitle = 'Campagne in sospeso';        $campaigns = $this->campaignData('pending');
 
         return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function rejected() {
-        $pageTitle = 'Rejected Campaigns';
-        $campaigns = $this->campaignData('reject');
+$pageTitle = 'Campagne rifiutate';        $campaigns = $this->campaignData('reject');
 
         return view($this->activeTheme . 'user.campaign.index', compact('pageTitle', 'campaigns'));
     }
@@ -62,8 +58,7 @@ class CampaignController extends Controller
         // Delete previously unused gallery images if exist
         $this->removePreviousGallery();
 
-        $pageTitle  = 'Crea Nuova Campagna';
-        $categories = Category::active()->get();
+$pageTitle  = 'Crea Nuova Campagna';        $categories = Category::active()->get();
 
         return view($this->activeTheme . 'user.campaign.new', compact('pageTitle', 'categories'));
     }
@@ -192,8 +187,7 @@ class CampaignController extends Controller
         // Delete previously unused gallery images if exist
         $this->removePreviousGallery();
 
-        $pageTitle  = 'Edit Campaign';
-        $categories = Category::get();
+$pageTitle  = 'Modifica campagna';        $categories = Category::get();
         $campaign   = Campaign::where('slug', $slug)
                                 ->where('user_id', auth()->id())
                                 ->approve()
@@ -338,8 +332,7 @@ class CampaignController extends Controller
     }
 
     function show($slug) {
-        $pageTitle    = 'Campaign Details';
-        $campaignData = Campaign::where('slug', $slug)->where('user_id', auth()->id())->firstOrFail();
+$pageTitle    = 'Dettagli della campagna';        $campaignData = Campaign::where('slug', $slug)->where('user_id', auth()->id())->firstOrFail();
         $comments     = Comment::with('user')
                         ->where('campaign_id', $campaignData->id)
                         ->approve()

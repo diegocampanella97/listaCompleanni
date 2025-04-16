@@ -12,50 +12,43 @@ use App\Models\Deposit;
 class CampaignController extends Controller
 {
     function index() {
-        $pageTitle = 'All Campaigns';
-        $campaigns = $this->campaignData();
+$pageTitle = 'Tutte le campagne';        $campaigns = $this->campaignData();
 
         return view('admin.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function pending() {
-        $pageTitle = 'Pending Campaigns';
-        $campaigns = $this->campaignData('pending');
+$pageTitle = 'Campagne in sospeso';        $campaigns = $this->campaignData('pending');
 
         return view('admin.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function approved() {
-        $pageTitle = 'Approved Campaigns';
-        $campaigns = $this->campaignData('approve');
+$pageTitle = 'Campagne approvate';        $campaigns = $this->campaignData('approve');
 
         return view('admin.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function rejected() {
-        $pageTitle = 'Rejected Campaigns';
-        $campaigns = $this->campaignData('reject');
+$pageTitle = 'Campagne rifiutate';        $campaigns = $this->campaignData('reject');
 
         return view('admin.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function running() {
-        $pageTitle = 'Running Campaigns';
-        $campaigns = $this->campaignData('running');
+$pageTitle = 'Campagne di gestione';        $campaigns = $this->campaignData('running');
 
         return view('admin.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function expired() {
-        $pageTitle = 'Expired Campaigns';
-        $campaigns = $this->campaignData('expired');
+$pageTitle = 'Campagne scadute';        $campaigns = $this->campaignData('expired');
 
         return view('admin.campaign.index', compact('pageTitle', 'campaigns'));
     }
 
     function upcoming() {
-        $pageTitle = 'Upcoming Campaigns';
-        $campaigns = $this->campaignData('upcoming');
+$pageTitle = 'Campagne imminenti';        $campaigns = $this->campaignData('upcoming');
 
         return view('admin.campaign.index', compact('pageTitle', 'campaigns'));
     }
@@ -68,8 +61,7 @@ class CampaignController extends Controller
     }
 
     function details($id) {
-        $pageTitle  = 'Campaign Details';
-        $backRoute  = route('admin.campaigns.index');
+$pageTitle  = 'Dettagli della campagna';        $backRoute  = route('admin.campaigns.index');
         $campaign   = Campaign::findOrFail($id);
 
         

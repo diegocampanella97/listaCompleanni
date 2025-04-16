@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\File;
 class LanguageController extends Controller
 {
     function index() {
-        $pageTitle = 'Language Setting';
-        $languages = Language::get();
+$pageTitle = 'Impostazione della lingua';        $languages = Language::get();
         
         return view('admin.language.index', compact('pageTitle', 'languages'));
     }
@@ -90,8 +89,7 @@ class LanguageController extends Controller
 
     function translateKeyword($id) {
         $language  = Language::findOrFail($id);
-        $pageTitle = "Update " . $language->name . " Keywords";
-        $json      = file_get_contents(resource_path('lang/') . $language->code . '.json');
+$pageTitle = "Aggiornamento" . $language->name . " Keywords";        $json      = file_get_contents(resource_path('lang/') . $language->code . '.json');
         $allLang   = Language::all();
         $searchKey = trim(request('search'));
 

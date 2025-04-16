@@ -15,8 +15,7 @@ use Image;
 class SettingController extends Controller
 {
     function basic() {
-        $pageTitle   = 'Basic Setting';
-        $timeRegions = json_decode(file_get_contents(resource_path('views/admin/partials/timeRegion.json')));
+$pageTitle   = 'Impostazione di base';        $timeRegions = json_decode(file_get_contents(resource_path('views/admin/partials/timeRegion.json')));
 
         return view('admin.setting.basic', compact('pageTitle', 'timeRegions'));
     }
@@ -122,8 +121,7 @@ class SettingController extends Controller
     }
 
     function plugin() {
-        $pageTitle = 'Plugin Settings';
-        $plugins   = Plugin::orderBy('name')->get();
+$pageTitle = 'Impostazioni del plugin';        $plugins   = Plugin::orderBy('name')->get();
 
         return view('admin.setting.plugin', compact('pageTitle', 'plugins'));
     }
@@ -157,8 +155,7 @@ class SettingController extends Controller
     }
 
     function seo() {
-        $pageTitle = 'SEO Setting';
-        $seo       = SiteData::where('data_key', 'seo.data')->first();
+$pageTitle = 'Impostazione SEO';        $seo       = SiteData::where('data_key', 'seo.data')->first();
 
         if(!$seo) {
             $data_info           = '{"keywords":[],"description":"","social_title":"","social_description":"","image":null}';
@@ -173,8 +170,7 @@ class SettingController extends Controller
     }
 
     function cookie() {
-        $pageTitle = 'Cookie Policy';
-        $cookie    = SiteData::where('data_key', 'cookie.data')->first();
+$pageTitle = 'Politica sui cookie';        $cookie    = SiteData::where('data_key', 'cookie.data')->first();
 
         return view('admin.site.cookie', compact('pageTitle', 'cookie'));
     }
@@ -198,8 +194,7 @@ class SettingController extends Controller
     }
 
     function maintenance() {
-        $pageTitle   = 'Under Maintenance Mode';
-        $maintenance = SiteData::where('data_key', 'maintenance.data')->first();
+$pageTitle   = 'In modalità di manutenzione';        $maintenance = SiteData::where('data_key', 'maintenance.data')->first();
 
         return view('admin.site.maintenance', compact('pageTitle', 'maintenance'));
     }
@@ -226,8 +221,7 @@ class SettingController extends Controller
     }
 
     function kyc() {
-        $pageTitle   = 'KYC Setting';
-        $form        = Form::where('act','kyc')->first();
+$pageTitle   = 'Impostazione KYC';        $form        = Form::where('act','kyc')->first();
         $formHeading = 'KYC Form Data';
 
         return view('admin.setting.kyc',compact('pageTitle', 'form', 'formHeading'));

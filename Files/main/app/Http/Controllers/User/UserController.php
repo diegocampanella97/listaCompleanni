@@ -19,8 +19,7 @@ use Illuminate\Validation\Rules\Password;
 class UserController extends Controller
 {
     function home() {
-        $pageTitle  = 'Dashboard';
-        $kycContent = getSiteData('kyc.content', true);
+$pageTitle  = 'Pannello di controllo';        $kycContent = getSiteData('kyc.content', true);
         $user       = auth()->user();
 
         $user->loadCount(['campaigns', 
@@ -92,8 +91,7 @@ class UserController extends Controller
             return back()->withToasts($toast);
         }
 
-        $pageTitle = 'Identification Form';
-        $form      = Form::where('act', 'kyc')->first();
+$pageTitle = 'Forma di identificazione';        $form      = Form::where('act', 'kyc')->first();
 
         return view($this->activeTheme . 'user.kyc.form', compact('pageTitle', 'form'));
     }
@@ -118,15 +116,13 @@ class UserController extends Controller
     }
 
     function kycData() {
-        $pageTitle = 'Identification Information';
-        $user      = auth()->user();
+$pageTitle = 'Informazioni di identificazione';        $user      = auth()->user();
 
         return view($this->activeTheme . 'user.kyc.info', compact('pageTitle', 'user'));
     }
 
     function profile() {
-        $pageTitle = 'Profile Settings';
-        $user      = auth()->user();
+$pageTitle = 'Impostazioni del profilo';        $user      = auth()->user();
 
         return view($this->activeTheme . 'user.page.profile', compact('pageTitle', 'user'));
     }
@@ -171,8 +167,7 @@ class UserController extends Controller
     }
 
     function password() {
-        $pageTitle = 'Change Password';
-        $user      = auth()->user();
+$pageTitle = 'Cambiare la password';        $user      = auth()->user();
 
         return view($this->activeTheme . 'user.page.password', compact('pageTitle', 'user'));
     }
@@ -210,8 +205,7 @@ class UserController extends Controller
         $user      = auth()->user();
         $secret    = $ga->createSecret();
         $qrCodeUrl = $ga->getQRCodeGoogleUrl($user->username . '@' . bs('site_name'), $secret);
-        $pageTitle = '2FA Settings';
-
+$pageTitle = 'Impostazioni 2FA';
         return view($this->activeTheme . 'user.page.twoFactor', compact('pageTitle', 'secret', 'qrCodeUrl', 'user'));
     }
 
@@ -266,8 +260,7 @@ class UserController extends Controller
     }
 
     function donationHistory() {
-        $pageTitle = 'My Donations';
-        $deposits  = auth()->user()->deposits()
+$pageTitle = 'Le mie donazioni';        $deposits  = auth()->user()->deposits()
                     ->with(['gateway', 'campaign'])
                     ->index()
                     ->latest()
@@ -278,8 +271,7 @@ class UserController extends Controller
     }
 
     function donationReceived() {
-        $pageTitle = 'Received Donations';
-        $campaigns = auth()->user()->campaigns()->pluck('id');
+$pageTitle = 'Donazioni ricevute';        $campaigns = auth()->user()->campaigns()->pluck('id');
         $donations = Deposit::whereIn('campaign_id', $campaigns)
                             ->with(['user', 'gateway', 'campaign'])
                             ->done()
@@ -291,8 +283,7 @@ class UserController extends Controller
     }
 
     function transactions() {
-        $pageTitle    = 'Transactions';
-        $remarks      = Transaction::distinct('remark')->orderBy('remark')->get('remark');
+$pageTitle    = 'Transazioni';        $remarks      = Transaction::distinct('remark')->orderBy('remark')->get('remark');
         $transactions = Transaction::where('user_id', auth()->id())
                                     ->searchable(['trx'])
                                     ->filter(['remark'])

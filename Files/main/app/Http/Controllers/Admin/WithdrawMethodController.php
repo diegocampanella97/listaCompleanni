@@ -9,15 +9,13 @@ use App\Models\WithdrawMethod;
 class WithdrawMethodController extends Controller
 {
     function index() {
-        $pageTitle = 'Withdrawal Methods';
-        $methods   = WithdrawMethod::orderBy('name')->orderBy('id')->get();
+$pageTitle = 'Metodi di ritiro';        $methods   = WithdrawMethod::orderBy('name')->orderBy('id')->get();
 
         return view('admin.gateways.withdraw.index', compact('pageTitle', 'methods'));
     }
 
     function new() {
-        $pageTitle   = 'Add Withdrawal Method';
-        $method      = '';
+$pageTitle   = 'Aggiungi metodo di astinenza';        $method      = '';
         $form        = '';
         $formHeading = 'User Information';
         $actionRoute = route('admin.withdraw.method.store');

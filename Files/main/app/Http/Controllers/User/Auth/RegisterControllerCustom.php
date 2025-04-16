@@ -17,8 +17,7 @@ class RegisterControllerCustom extends Controller
     use RegistersUsers;
 
     function registerForm() {
-        $pageTitle       = 'Register';
-        $info            = json_decode(json_encode(getIpInfo()), true);
+$pageTitle       = 'Registro';        $info            = json_decode(json_encode(getIpInfo()), true);
         $mobileCode      = @implode(',', $info['code']);
         $countries       = json_decode(file_get_contents(resource_path('views/partials/country.json')));
         $registerContent = getSiteData('register.content', true);

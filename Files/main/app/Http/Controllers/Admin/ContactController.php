@@ -9,8 +9,7 @@ use App\Models\Subscriber;
 class ContactController extends Controller
 {
     function subscriberIndex() {
-        $pageTitle   = 'Subscribers';
-        $subscribers = Subscriber::searchable(['email'])->latest()->paginate(getPaginate());
+$pageTitle   = 'Abbonati';        $subscribers = Subscriber::searchable(['email'])->latest()->paginate(getPaginate());
 
         return view('admin.page.subscriber', compact('pageTitle', 'subscribers'));
     }
@@ -50,8 +49,7 @@ class ContactController extends Controller
     }
 
     function contactIndex() {
-        $pageTitle = 'Contacts';
-        $contacts  = Contact::searchable(['email'])->dateFilter()->orderBy('status')->latest()->paginate(getPaginate());
+$pageTitle = 'Contatti';        $contacts  = Contact::searchable(['email'])->dateFilter()->orderBy('status')->latest()->paginate(getPaginate());
 
         return view('admin.page.contact', compact('pageTitle', 'contacts'));
     }

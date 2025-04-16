@@ -13,15 +13,13 @@ use App\Models\WithdrawMethod;
 class WithdrawController extends Controller
 {   
     function index() {
-        $pageTitle = 'Withdraw History';
-        $withdraws = Withdrawal::where('user_id', auth()->id())->searchable(['trx'])->index()->with('method')->latest()->paginate(getPaginate());
+$pageTitle = 'Ritirare la storia';        $withdraws = Withdrawal::where('user_id', auth()->id())->searchable(['trx'])->index()->with('method')->latest()->paginate(getPaginate());
 
         return view($this->activeTheme . 'user.withdraw.index', compact('pageTitle', 'withdraws'));
     }
     
     function methods() {
-        $pageTitle = 'Make Withdraw';
-        $methods   = WithdrawMethod::active()->get();
+$pageTitle = 'Ritirare';        $methods   = WithdrawMethod::active()->get();
 
         return view($this->activeTheme . 'user.withdraw.methods', compact('pageTitle', 'methods'));
     }
@@ -72,8 +70,7 @@ class WithdrawController extends Controller
     }
 
     function preview() {
-        $pageTitle = 'Withdraw Preview';
-        $withdraw  = Withdrawal::with('method', 'user')->where('trx', session()->get('wtrx'))->initiate()->latest()->firstOrFail();
+$pageTitle = 'Prelevare l'anteprima';        $withdraw  = Withdrawal::with('method', 'user')->where('trx', session()->get('wtrx'))->initiate()->latest()->firstOrFail();
         return view($this->activeTheme . 'user.withdraw.preview', compact('pageTitle','withdraw'));
     }
 

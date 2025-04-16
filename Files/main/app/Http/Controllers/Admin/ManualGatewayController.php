@@ -11,15 +11,13 @@ use App\Models\GatewayCurrency;
 class ManualGatewayController extends Controller
 {
     function index() {
-        $pageTitle = 'Manual Gateways';
-        $methods   = Gateway::manual()->with('singleCurrency')->latest()->get();
+$pageTitle = 'Gateway manuali';        $methods   = Gateway::manual()->with('singleCurrency')->latest()->get();
         
         return view('admin.gateways.manual.index', compact('pageTitle', 'methods'));
     }
 
     function new() {
-        $pageTitle   = 'Add Manual Gateway';
-        $method      = '';
+$pageTitle   = 'Aggiungi il gateway manuale';        $method      = '';
         $form        = '';
         $formHeading = 'User Information';
         $actionRoute = route('admin.gateway.manual.store');

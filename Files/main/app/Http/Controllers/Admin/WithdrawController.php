@@ -10,8 +10,7 @@ use App\Models\Withdrawal;
 class WithdrawController extends Controller
 {
     function index() {
-        $pageTitle      = 'All Withdrawals';
-        $withdrawalData = $this->withdrawalData('index', true);
+$pageTitle      = 'Tutti i prelievi';        $withdrawalData = $this->withdrawalData('index', true);
         $withdrawals    = $withdrawalData['data'];
         $summary        = $withdrawalData['summary'];
         $done           = $summary['done'];
@@ -23,22 +22,19 @@ class WithdrawController extends Controller
     }
 
     function pending() {
-        $pageTitle   = 'Pending Withdrawals';
-        $withdrawals = $this->withdrawalData('pending');
+$pageTitle   = 'In attesa di prelievi';        $withdrawals = $this->withdrawalData('pending');
 
         return view('admin.page.withdrawals', compact('pageTitle', 'withdrawals'));
     }
 
     function done() {
-        $pageTitle   = 'Done Withdrawals';
-        $withdrawals = $this->withdrawalData('done');
+$pageTitle   = 'Fatto prelievi';        $withdrawals = $this->withdrawalData('done');
 
         return view('admin.page.withdrawals', compact('pageTitle', 'withdrawals'));
     }
 
     function cancelled() {
-        $pageTitle   = 'Cancelled Withdrawals';
-        $withdrawals = $this->withdrawalData('cancelled');
+$pageTitle   = 'Prelievi annullati';        $withdrawals = $this->withdrawalData('cancelled');
 
         return view('admin.page.withdrawals', compact('pageTitle', 'withdrawals'));
     }

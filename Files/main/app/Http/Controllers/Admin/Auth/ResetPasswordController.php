@@ -12,8 +12,7 @@ use Illuminate\Validation\Rules\Password;
 class ResetPasswordController extends Controller
 {
     function resetForm($email, $verCode) {
-        $pageTitle = 'Account Recovery';
-        $checkCode = AdminPasswordReset::where('code', $verCode)->where('email', $email)->active()->first();
+$pageTitle = 'Recupero dell'account';        $checkCode = AdminPasswordReset::where('code', $verCode)->where('email', $email)->active()->first();
 
         if (!$checkCode) {
             $toast[] = ['error', 'Invalid verification code'];

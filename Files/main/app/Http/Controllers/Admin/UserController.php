@@ -13,23 +13,20 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     function index() {
-        $pageTitle = 'All Users';
-        $users     = $this->userData();
+$pageTitle = 'Tutti gli utenti';        $users     = $this->userData();
 
         return view('admin.user.index', compact('pageTitle', 'users'));
     }
 
     function createCampain($id) {
         $user = User::findOrFail($id);
-        $pageTitle = 'Crea Campagna per ' . $user->firstname . " " . $user->lastname ;
-        $categories = Category::active()->get();
+$pageTitle = 'Crea campagna per' . $user->firstname . " " . $user->lastname ;        $categories = Category::active()->get();
         return view('admin.campaign.create', compact('pageTitle', 'categories', 'user'));
     }
 
 
     function create(){
-        $pageTitle = 'Create User';
-        $info            = json_decode(json_encode(getIpInfo()), true);
+$pageTitle = 'Crea utente';        $info            = json_decode(json_encode(getIpInfo()), true);
         $mobileCode      = @implode(',', $info['code']);
         $countries       = json_decode(file_get_contents(resource_path('views/partials/country.json')));
         $registerContent = getSiteData('register.content', true);
@@ -38,43 +35,37 @@ class UserController extends Controller
     }
 
     function active() {
-        $pageTitle = 'Active Users';
-        $users     = $this->userData('active');
+$pageTitle = 'Utenti attivi';        $users     = $this->userData('active');
 
         return view('admin.user.index', compact('pageTitle', 'users'));
     }
 
     function banned() {
-        $pageTitle = 'Banned Users';
-        $users     = $this->userData('banned');
+$pageTitle = 'Utenti vietati';        $users     = $this->userData('banned');
 
         return view('admin.user.index', compact('pageTitle', 'users'));
     }
 
     function kycPending() {
-        $pageTitle = 'KYC Pending Users';
-        $users     = $this->userData('kycPending');
+$pageTitle = 'KYC in attesa degli utenti';        $users     = $this->userData('kycPending');
 
         return view('admin.user.index', compact('pageTitle', 'users'));
     }
 
     function kycUnConfirmed() {
-        $pageTitle = 'KYC Unconfirmed Users';
-        $users     = $this->userData('kycUnconfirmed');
+$pageTitle = 'Utenti KYC non confermati';        $users     = $this->userData('kycUnconfirmed');
 
         return view('admin.user.index', compact('pageTitle', 'users'));
     }
 
     function emailUnConfirmed() {
-        $pageTitle = 'Email Unconfirmed Users';
-        $users     = $this->userData('emailUnconfirmed');
+$pageTitle = 'Email utenti non confermati';        $users     = $this->userData('emailUnconfirmed');
 
         return view('admin.user.index', compact('pageTitle', 'users'));
     }
 
     function mobileUnConfirmed() {
-        $pageTitle = 'Mobile Unconfirmed Users';
-        $users     = $this->userData('mobileUnconfirmed');
+$pageTitle = 'Utenti mobili non confermati';        $users     = $this->userData('mobileUnconfirmed');
 
         return view('admin.user.index', compact('pageTitle', 'users'));
     }
@@ -86,8 +77,7 @@ class UserController extends Controller
             'campaigns as rejected_campaigns' => fn ($query) => $query->reject(),
         ])->findOrFail($id);
 
-        $pageTitle              = 'Details - ' . $user->username;
-        $campaigns              = $user->campaigns->pluck('id');
+$pageTitle              = 'Dettagli -' . $user->username;        $campaigns              = $user->campaigns->pluck('id');
         $totalReceivedDonation  = Deposit::whereIn('campaign_id', $campaigns)->done()->sum('amount');
         $totalWithdrawal        = $user->withdrawals()->done()->sum('amount');
         $totalGivenDonation     = $user->deposits()->done()->sum('amount');

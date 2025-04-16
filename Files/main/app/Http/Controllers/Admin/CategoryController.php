@@ -10,8 +10,7 @@ use Illuminate\Validation\Rules\File;
 class CategoryController extends Controller
 {
     function index() {
-        $pageTitle  = 'Campaign Categories';
-        $categories = Category::searchable(['name'])->latest()->with('campaigns')->paginate(getPaginate());
+$pageTitle  = 'Categorie della campagna';        $categories = Category::searchable(['name'])->latest()->with('campaigns')->paginate(getPaginate());
 
         return view('admin.page.categories', compact('pageTitle', 'categories'));
     }

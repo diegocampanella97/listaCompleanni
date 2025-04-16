@@ -127,8 +127,7 @@ class PaymentController extends Controller
             $deposit->save();
         }
 
-        $pageTitle = 'Donation Confirmation';
-
+$pageTitle = 'Conferma della donazione';
         return view($this->activeTheme . $data->view, compact('data', 'pageTitle', 'deposit'));
     }
 
@@ -208,8 +207,7 @@ class PaymentController extends Controller
         if (!$deposit) return to_route(gatewayRedirectUrl());
 
         if ($deposit->method_code > 999) {
-            $pageTitle       = 'Donation Confirmation';
-            $gatewayCurrency = $deposit->gatewayCurrency();
+$pageTitle       = 'Conferma della donazione';            $gatewayCurrency = $deposit->gatewayCurrency();
             $gateway         = $gatewayCurrency->method;
 
             return view($this->activeTheme . 'user.payment.manual', compact('deposit', 'pageTitle', 'gateway'));

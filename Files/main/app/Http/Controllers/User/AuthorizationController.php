@@ -12,19 +12,15 @@ class AuthorizationController extends Controller
         $user = auth()->user();
 
         if (!$user->status) {
-            $pageTitle = 'Banned';
-            $type = 'ban';
+$pageTitle = 'Vietato';            $type = 'ban';
         }elseif(!$user->ec) {
             $type = 'email';
-            $pageTitle = 'Confirm Email';
-            $toastTemplate = 'EVER_CODE';
+$pageTitle = 'Conferma email';            $toastTemplate = 'EVER_CODE';
         }elseif (!$user->sc) {
             $type = 'sms';
-            $pageTitle = 'Confirm Mobile Number';
-            $toastTemplate = 'SVER_CODE';
+$pageTitle = 'Conferma il numero di cellulare';            $toastTemplate = 'SVER_CODE';
         }elseif (!$user->tc) {
-            $pageTitle = '2FA Confirmation';
-            $type = '2fa';
+$pageTitle = 'Conferma 2FA';            $type = '2fa';
         }else{
             return to_route('user.home');
         }

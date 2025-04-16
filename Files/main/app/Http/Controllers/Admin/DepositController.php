@@ -12,8 +12,7 @@ use App\Http\Controllers\Gateway\PaymentController;
 class DepositController extends Controller
 {
     function index() {
-        $pageTitle   = 'All Donations';
-        $depositData = $this->donationData('index', true);
+$pageTitle   = 'Tutte le donazioni';        $depositData = $this->donationData('index', true);
         $deposits    = $depositData['data'];
         $summary     = $depositData['summary'];
         $done        = $summary['done'];
@@ -25,22 +24,19 @@ class DepositController extends Controller
     }
 
     function pending() {
-        $pageTitle = 'Pending Donations';
-        $deposits  = $this->donationData('pending');
+$pageTitle = 'Donazioni in sospeso';        $deposits  = $this->donationData('pending');
 
         return view('admin.page.donations', compact('pageTitle', 'deposits'));
     }
 
     function done() {
-        $pageTitle = 'Done Donations';
-        $deposits  = $this->donationData('done');
+$pageTitle = 'Donazioni fatte';        $deposits  = $this->donationData('done');
 
         return view('admin.page.donations', compact('pageTitle', 'deposits'));
     }
 
     function cancelled() {
-        $pageTitle = 'Cancelled Donations';
-        $deposits  = $this->donationData('cancelled');
+$pageTitle = 'Donazioni annullate';        $deposits  = $this->donationData('cancelled');
 
         return view('admin.page.donations', compact('pageTitle', 'deposits'));
     }
