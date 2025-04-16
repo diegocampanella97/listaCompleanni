@@ -1,85 +1,175 @@
 #!/usr/bin/env python3
 import os
 import re
+import time
 import argparse
-from openai import OpenAI
+import logging
+import requests
+from deep_translator import GoogleTranslator
 
-def find_files_recursively(root_dir):
-    """Recursively find all files in a directory."""
-    all_files = []
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("page_title_translator.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger("PageTitleTranslator")
+
+def find_php_files_recursively(root_dir):
+    """Recursively find all PHP files in a directory."""
+    php_files = []
     for dirpath, _, filenames in os.walk(root_dir):
         for filename in filenames:
-            all_files.append(os.path.join(dirpath, filename))
-    return all_files
+            if filename.endswith('.php'):
+                php_files.append(os.path.join(dirpath, filename))
+    return php_files
 
-def translate_with_openai(text, api_key):
-    """Translate text from English to Italian using OpenAI's GPT-4o."""
+def translate_with_deep_translator(text):
+    """Translate text from English to Italian using deep_translator."""
     # Extract content after $pageTitle = 
-    match = re.match(r'\$pageTitle\s*=\s*[\'"](.+?)[\'"]', text)
+    pattern = r'(\$pageTitle\s*=\s*[\'"])(.+?)([\'"].*)'
+    match = re.match(pattern, text.strip())
+    
     if not match:
+        logger.debug(f"No match found in: {text}")
         return text
     
-    content_to_translate = match.group(1)
+    prefix = match.group(1)  # $pageTitle = '
+    content_to_translate = match.group(2)  # actual content
+    suffix = match.group(3)  # ' and anything after
     
-    client = OpenAI(api_key=api_key)
-    response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {"role": "system", "content": "You are a translator. Translate the following text from English to Italian."},
-            {"role": "user", "content": content_to_translate}
-        ]
-    )
+    logger.info(f"Found content to translate: '{content_to_translate}'")
     
-    translated_text = response.choices[0].message.content.strip()
-    # Replace the original content with the translated content
-    return text.replace(content_to_translate, translated_text)
+    try:
+        # Retry logic for translation
+        max_retries = 5
+        retry_count = 0
+        
+        while retry_count < max_retries:
+            try:
+                # Translate from English to Italian
+                translator = GoogleTranslator(source='en', target='it')
+                translated_text = translator.translate(content_to_translate)
+                
+                if translated_text:
+                    logger.info(f"Translated text: '{translated_text}'")
+                    # Reconstruct the line with the translated content
+                    return f"{prefix}{translated_text}{suffix}"
+                else:
+                    raise Exception("Empty translation result")
+                    
+            except Exception as e:
+                retry_count += 1
+                logger.warning(f"Translation attempt {retry_count} failed: {e}")
+                if retry_count < max_retries:
+                    wait_time = 2 ** retry_count  # Exponential backoff
+                    logger.info(f"Waiting {wait_time} seconds before retrying...")
+                    time.sleep(wait_time)
+                else:
+                    raise
+    
+    except Exception as e:
+        logger.error(f"Error during translation: {e}")
+        logger.error("Translation failed multiple times. Skipping this translation.")
+        return text
 
-def process_file(file_path, api_key):
-    """Process a file to find and translate lines starting with $pageTitle."""
+def process_file(file_path):
+    """Process a PHP file to find and translate lines starting with $pageTitle."""
+    logger.info(f"Processing file: {file_path}")
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
         
         changes_made = False
         for i, line in enumerate(lines):
-            if line.strip().startswith('$pageTitle'):
-                lines[i] = translate_with_openai(line, api_key)
-                changes_made = True
+            stripped_line = line.strip()
+            if stripped_line.startswith('$pageTitle'):
+                logger.info(f"Found $pageTitle at line {i+1} in {file_path}")
+                original_line = lines[i]
+                lines[i] = translate_with_deep_translator(original_line)
+                
+                # Log the translation for verification
+                if original_line != lines[i]:
+                    logger.info(f"Line changed from: '{original_line.strip()}' to '{lines[i].strip()}'")
+                    changes_made = True
+                else:
+                    logger.debug("No translation changes were made to this line")
         
         if changes_made:
             with open(file_path, 'w', encoding='utf-8') as file:
                 file.writelines(lines)
-            print(f"Translated $pageTitle in: {file_path}")
+            logger.info(f"Translated $pageTitle in: {file_path}")
+        else:
+            logger.debug(f"No $pageTitle found or no changes needed in: {file_path}")
         
         return changes_made
             
     except Exception as e:
-        print(f"Error processing file {file_path}: {e}")
+        logger.error(f"Error processing file {file_path}: {e}")
+        return False
+
+def check_connectivity():
+    """Check if there's internet connectivity and translation service is accessible."""
+    try:
+        logger.info("Checking connectivity to Google services...")
+        response = requests.get("https://translate.google.com", timeout=5)
+        if response.status_code >= 200 and response.status_code < 300:
+            logger.info("Successfully connected to translation service.")
+            return True
+        else:
+            logger.warning(f"Connection returned status code: {response.status_code}")
+            return False
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Connectivity check failed: {e}")
         return False
 
 def main():
-    parser = argparse.ArgumentParser(description='Translate $pageTitle content from English to Italian.')
-    parser.add_argument('root_dir', help='Root directory to search for files')
-    parser.add_argument('--api-key', help='OpenAI API key', default=os.environ.get('OPENAI_API_KEY'))
+    parser = argparse.ArgumentParser(description='Translate $pageTitle content from English to Italian in PHP files.')
+    parser.add_argument('root_dir', help='Root directory to search for PHP files')
+    parser.add_argument('--debug', action='store_true', help='Enable debug logging')
+    parser.add_argument('--test', help='Test with a specific string instead of processing files', default=None)
+    parser.add_argument('--check-connectivity', action='store_true', help='Check connectivity to translation service before starting')
     args = parser.parse_args()
     
-    if not args.api_key:
-        print("Error: OpenAI API key is required. Provide it via --api-key or set the OPENAI_API_KEY environment variable.")
+    if args.debug:
+        logger.setLevel(logging.DEBUG)
+        logger.debug("Debug logging enabled")
+    
+    # Check connectivity if requested
+    if args.check_connectivity and not check_connectivity():
+        logger.error("Connection to translation service failed. Please check your internet connection and try again.")
+        return
+    
+    # Test mode for quick verification
+    if args.test:
+        logger.info(f"Test mode with string: {args.test}")
+        translated = translate_with_deep_translator(args.test)
+        logger.info(f"Original: {args.test}")
+        logger.info(f"Translated: {translated}")
         return
     
     if not os.path.isdir(args.root_dir):
-        print(f"Error: {args.root_dir} is not a valid directory.")
+        logger.error(f"{args.root_dir} is not a valid directory.")
         return
     
-    files = find_files_recursively(args.root_dir)
-    print(f"Found {len(files)} files to process.")
+    logger.info(f"Starting translation process in directory: {args.root_dir}")
+    php_files = find_php_files_recursively(args.root_dir)
+    logger.info(f"Found {len(php_files)} PHP files to process.")
     
     translated_count = 0
-    for file_path in files:
-        if process_file(file_path, args.api_key):
-            translated_count += 1
+    error_count = 0
+    for file_path in php_files:
+        try:
+            if process_file(file_path):
+                translated_count += 1
+        except Exception as e:
+            logger.error(f"Unhandled error processing file {file_path}: {e}")
+            error_count += 1
     
-    print(f"Translation complete. Processed {len(files)} files, translated $pageTitle in {translated_count} files.")
+    logger.info(f"Translation complete. Processed {len(php_files)} PHP files, translated $pageTitle in {translated_count} files. Errors: {error_count}")
 
 if __name__ == "__main__":
     main()
