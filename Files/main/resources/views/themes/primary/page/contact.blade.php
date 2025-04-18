@@ -29,7 +29,7 @@
                 <div class="col-lg-6">
                     <div class="card custom--card" data-aos="fade-up" data-aos-duration="1500">
                         <div class="card-header">
-                            <h3 class="title">{{ __(@$contactContent->data_info->form_heading) }}</h3>
+                            <h3 class="title">Siamo qui per te, scrivici!</h3>
                         </div>
                         <div class="card-body">
                             <form action="" method="POST" class="row g-3">
@@ -42,13 +42,25 @@
                                     <label class="form--label required">@lang('Your Email')</label>
                                     <input type="email" name="email" class="form--control" value="{{ old('email', @$user->email) }}" @readonly(@$user) required>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-sm-6">
+                                    <label class="form--label">@lang('Numero di Telefono')</label>
+                                    <input type="tel" name="phone" class="form--control" value="{{ old('phone', @$user->phone) }}">
+                                </div>
+                                <div class="col-sm-6">
                                     <label class="form--label required">@lang('Subject')</label>
                                     <input type="text" name="subject" class="form--control" value="{{ old('subject') }}" required>
                                 </div>
                                 <div class="col-12">
                                     <label class="form--label required">@lang('Message')</label>
                                     <textarea name="message" class="form--control" rows="10" required>{{ old('message') }}</textarea>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="gdpr_consent" id="gdpr_consent" required>
+                                        <label class="form-check-label" for="gdpr_consent">
+                                            Acconsento al trattamento dei miei dati personali secondo la <a href="/policy/privacy-policy/11" target="_blank">normativa GDPR</a>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn--base">{{ __(@$contactContent->data_info->form_button_name) }}</button>
