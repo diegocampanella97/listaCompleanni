@@ -61,7 +61,7 @@
                     <div class="contact__map-card custom--card" data-aos="fade-up" data-aos-duration="1500">
                         <div class="card-body">
                             <div class="contact__map">
-                                <iframe src="https://maps.google.com/maps?hl=en&amp;q={{ @$contactContent->data_info->latitude }},%20{{ @$contactContent->data_info->longitude }}+({{ @$setting->site_name }})&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" loading="lazy" allowfullscreen></iframe>
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6029.840134326967!2d17.014690676644516!3d40.917498471363324!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1347b92f41a1c885%3A0x1a5e6b61173cdd30!2sVierre%20Viaggi!5e0!3m2!1sit!2sit!4v1744977913085!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
