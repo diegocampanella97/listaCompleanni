@@ -316,6 +316,7 @@ $pageTitle       = 'Contatto';        $user            = auth()->user();
             'email'   => 'required|string|max:40',
             'subject' => 'required|string|max:255',
             'message' => 'required',
+            'gdpr_consent' => 'required',
         ]);
 
         $user         = auth()->user();
@@ -332,7 +333,7 @@ $pageTitle       = 'Contatto';        $user            = auth()->user();
         $contact->name    = $user ? $user->fullname : request('name');
         $contact->email   = $email;
         $contact->subject = request('subject');
-        $contact->message = request('message');
+        $contact->message = request('message')." --- ✓ Consenso GDPR";
         $contact->save();
 
         $toast[] = ['success', 'We have received your message, kindly wait for the admin\'s response'];
