@@ -311,32 +311,48 @@ $pageTitle       = 'Contatto';        $user            = auth()->user();
     }
 
     function contactStore() {
+        $messages = [
+            'name.required' => 'Il campo nome è obbligatorio',
+            'name.string' => 'Il nome deve essere una stringa di testo',
+            'name.max' => 'Il nome non può superare i 40 caratteri',
+            'email.required' => 'Il campo email è obbligatorio',
+            'email.string' => 'L\'email deve essere una stringa di testo',
+            'email.max' => 'L\'email non può superare i 40 caratteri',
+            'subject.required' => 'L\'oggetto è obbligatorio',
+            'subject.string' => 'L\'oggetto deve essere una stringa di testo', 
+            'subject.max' => 'L\'oggetto non può superare i 255 caratteri',
+            'message.required' => 'Il messaggio è obbligatorio',
+            'gdpr_consent.required' => 'È necessario accettare il trattamento dei dati personali',
+        ];
+
         $this->validate(request(), [
             'name'    => 'required|string|max:40',
+            'phone' => 'nullable|string|max:40',
             'email'   => 'required|string|max:40',
             'subject' => 'required|string|max:255',
             'message' => 'required',
             'gdpr_consent' => 'required',
-        ]);
+        ], $messages);
 
         $user         = auth()->user();
         $email        = $user ? $user->email : request('email');
+        $phone        = $user ? $user->phone : request('phone');
         $contactCheck = Contact::where('email', $email)->where('status', ManageStatus::NO)->first();
 
         if ($contactCheck) {
-            $toast[] = ['warning', 'There is an existing contact on our record, kindly wait for the admin\'s response'];
+            $toast[] = ['warning', 'C\'è già un messaggio di contatto in attesa di risposta. Ti preghiamo di attendere che l\'amministratore risponda'];
 
             return back()->withToasts($toast);
         }
 
         $contact          = new Contact();
         $contact->name    = $user ? $user->fullname : request('name');
-        $contact->email   = $email;
+        $contact->email   = $email." - ".$phone;
         $contact->subject = request('subject');
         $contact->message = request('message')." --- ✓ Consenso GDPR";
         $contact->save();
 
-        $toast[] = ['success', 'We have received your message, kindly wait for the admin\'s response'];
+        $toast[] = ['success', 'Abbiamo ricevuto il tuo messaggio. Ti risponderemo al più presto!'];
 
         return back()->withToasts($toast);
     }

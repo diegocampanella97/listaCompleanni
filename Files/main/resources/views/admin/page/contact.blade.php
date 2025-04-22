@@ -6,7 +6,7 @@
             <thead>
                 <tr>
                     <th>@lang('S.N.')</th>
-                    <th>@lang('Email')</th>
+                    <th>@lang('Email') e @lang('Phone')</th>
                     <th>@lang('Name')</th>
                     <th>@lang('Subject')</th>
                     <th>@lang('Status')</th>
