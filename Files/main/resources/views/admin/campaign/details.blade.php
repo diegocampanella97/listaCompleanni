@@ -219,7 +219,11 @@
         <i class="ti ti-circle-arrow-left"></i> @lang('Back')
     </a>
 
-    <a href="{{ route('admin.user.withdraw', $campaign->user->id) }}" class="btn btn--sm btn--base">@lang('Completa Prelievo')</a>
+    @if($campaign->user->balance > 0)
+        <a href="{{ route('admin.user.withdraw', $campaign->user->id) }}" class="btn btn--sm btn--base" onclick="return confirm('@lang('Balance must be greater than 0')')">@lang('Completa Prelievo')</a>
+    @else
+        <button class="btn btn--sm btn--base" onclick="alert('@lang('Balance must be greater than 0')')" disabled>@lang('Completa Prelievo')</button>
+    @endif
 
     @if(!$campaign->isExpired())
         <div class="custom--dropdown">
