@@ -219,7 +219,7 @@
         <i class="ti ti-circle-arrow-left"></i> @lang('Back')
     </a>
 
-    <a href="#" class="btn btn--sm btn--base">@lang('Completa Prelievo')</a>
+    <a href="{{ route('admin.user.withdraw', $campaign->user->id) }}" class="btn btn--sm btn--base">@lang('Completa Prelievo')</a>
 
     @if(!$campaign->isExpired())
         <div class="custom--dropdown">
