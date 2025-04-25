@@ -19,8 +19,8 @@
         </div>
         <div class="custom--card h-auto">
             <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="title">Transazioni</h3>
-            <button id="printTransactions" class="btn btn--sm btn--base">@lang('Stampa Transazioni')</button>
+                <h3 class="title">Transazioni</h3>
+                <button id="printTransactions" class="btn btn--sm btn--base">@lang('Stampa Transazioni')</button>
             </div>
             <div class="card-body">
             @if(count($transactions))
@@ -215,9 +215,11 @@
 @endsection
 
 @push('breadcrumb')
-    <a href="{{ $backRoute }}" class="btn btn--sm btn--base">
+    <a href="{{ $backRoute }}" class="btn btn--sm btn--danger">
         <i class="ti ti-circle-arrow-left"></i> @lang('Back')
     </a>
+
+    <a href="#" class="btn btn--sm btn--base">@lang('Completa Prelievo')</a>
 
     @if(!$campaign->isExpired())
         <div class="custom--dropdown">

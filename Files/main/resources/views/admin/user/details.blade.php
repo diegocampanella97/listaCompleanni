@@ -352,6 +352,9 @@
 @endsection
 
 @push('breadcrumb')
+<a href="{{ route('admin.user.withdraw',['id' => $user->id]) }}" class="btn btn--sm btn--base" >
+    Crea Prelievo
+</a>
 <a href="{{ route('admin.user.createCampain',['id' => $user->id]) }}" class="btn btn--sm btn--base" >
     Crea Campagna
 </a>

@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Constants\ManageStatus;
-use App\Http\Controllers\Controller;
-use App\Models\Deposit;
-use App\Models\Transaction;
-use App\Models\Category;
 use App\Models\User;
+use App\Models\Deposit;
+use App\Models\Category;
+use App\Lib\FormProcessor;
+use App\Models\Withdrawal;
+use App\Models\Transaction;
+use App\Models\WithdrawMethod;
+use App\Constants\ManageStatus;
+use App\Models\AdminNotification;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -262,5 +266,91 @@ $pageTitle              = 'Dettagli -' . $user->username;        $campaigns     
         else $users = User::query();
 
         return $users->searchable(['username', 'email'])->dateFilter()->latest()->paginate(getPaginate());
+    }
+
+    function withdraw($id) {
+        $user = User::findOrFail($id);
+        $pageTitle = 'Ritirare';        
+        $methods   = WithdrawMethod::active()->get();
+        return view('admin.user.withdraw', compact('pageTitle', 'methods', 'user'));
+    }
+
+    function storeWithdraw($id) {
+        $this->validate(request(), [
+            'method_id' => 'required|int|gt:0',
+            'amount'    => 'required|numeric|gt:0'
+        ]);
+
+        $user   = User::findOrFail($id);
+        $amount = request('amount');
+        $method = WithdrawMethod::where('id', request('method_id'))->active()->firstOrFail();
+
+        if ($amount < $method->min_amount) {
+            $toast[] = ['error', 'The requested amount is below the minimum allowable amount'];
+            return back()->withToasts($toast);
+        }
+
+        if ($amount > $method->max_amount) {
+            $toast[] = ['error', 'The requested amount exceeds the maximum allowable amount'];
+            return back()->withToasts($toast);
+        }
+
+        if ($amount > $user->balance) {
+            $toast[] = ['error', 'You lack the necessary balance to process a withdrawal'];
+            return back()->withToasts($toast);
+        }
+
+        $charge      = $method->fixed_charge + ($amount * $method->percent_charge / 100);
+        $afterCharge = $amount - $charge;
+        $finalAmount = $afterCharge * $method->rate;
+
+        $withdraw               = new Withdrawal();
+        $withdraw->method_id    = $method->id;
+        $withdraw->user_id      = $user->id;
+        $withdraw->amount       = $amount;
+        $withdraw->currency     = $method->currency;
+        $withdraw->rate         = $method->rate;
+        $withdraw->charge       = $charge;
+        $withdraw->final_amount = $finalAmount;
+        $withdraw->after_charge = $afterCharge;
+        $withdraw->trx          = getTrx();
+
+        $formData       = $method->form->form_data;
+        $formProcessor  = new FormProcessor();
+        $validationRule = $formProcessor->valueValidation($formData);
+        request()->validate($validationRule);
+        $userData = $formProcessor->processFormData(request(), $formData);
+
+        $withdraw->status = ManageStatus::PAYMENT_SUCCESS;
+        $withdraw->withdraw_information = $userData;
+        $withdraw->save();
+
+        $user->balance -=  $withdraw->amount;
+        $user->save();
+
+        $transaction               = new Transaction();
+        $transaction->user_id      = $withdraw->user_id;
+        $transaction->amount       = $withdraw->amount;
+        $transaction->post_balance = $user->balance;
+        $transaction->charge       = $withdraw->charge;
+        $transaction->trx_type     = '-';
+        $transaction->details      = showAmount($withdraw->final_amount) . ' ' . $withdraw->currency . ' Withdraw Via ' . $withdraw->method->name;
+        $transaction->trx          = $withdraw->trx;
+        $transaction->remark       = 'withdraw';
+        $transaction->save();
+
+        notify($user, 'WITHDRAW_APPROVE', [
+            'method_name'     => $withdraw->method->name,
+            'method_currency' => $withdraw->currency,
+            'method_amount'   => showAmount($withdraw->final_amount),
+            'amount'          => showAmount($withdraw->amount),
+            'charge'          => showAmount($withdraw->charge),
+            'rate'            => showAmount($withdraw->rate),
+            'trx'             => $withdraw->trx,
+            'admin_details'   => null
+        ]);
+
+        $toast[] = ['success', 'Withdrawal approved successfully'];
+        return redirect()->route('admin.user.details', $user->id)->withToasts($toast);
     }
 }

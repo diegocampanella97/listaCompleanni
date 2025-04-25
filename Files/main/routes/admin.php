@@ -95,6 +95,11 @@ Route::middleware(['admin'])->group(function () {
         // User Details Operation
         Route::get('details/{id}', 'details')->name('details');
         Route::get('details/{id}/createCampain', 'createCampain')->name('createCampain');
+        
+        Route::get('details/{id}/withdraw', 'withdraw')->name('withdraw');
+        Route::post('details/{id}/withdraw', 'storeWithdraw')->name('withdraw.store');
+
+
 
         Route::post('update/{id}', 'update')->name('update');
         Route::get('login/{id}', 'login')->name('login');
