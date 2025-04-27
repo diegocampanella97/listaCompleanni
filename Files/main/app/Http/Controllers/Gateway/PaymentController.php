@@ -18,7 +18,6 @@ class PaymentController extends Controller
         $countryData = (array) json_decode(file_get_contents(resource_path('views/partials/country.json')));
         $mobileCodes = implode(',', array_column($countryData, 'dial_code'));
         $countries   = implode(',', array_column($countryData, 'country'));
-
         $this->validate(request(), [
             'amount'      => 'required|numeric|gt:0',
             'full_name'   => 'required|string|max:255',
@@ -30,8 +29,10 @@ class PaymentController extends Controller
             'currency'    => 'required',
         ]);
 
-        $campaign = Campaign::where('slug', $slug)->campaignCheck()->approve()->firstOrFail();
-
+        $campaign = Campaign::where('slug', $slug)->firstOrFail();
+        
+        //$campaign = Campaign::where('slug', $slug)->campaignCheck()->approve()->firstOrFail();
+        
         if (!$campaign) {
             $toast[] = ['error', 'Campaign not found'];
             return back()->withToasts($toast);

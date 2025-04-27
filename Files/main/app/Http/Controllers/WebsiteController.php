@@ -82,11 +82,12 @@ $pageTitle  = 'Campagne';        $categories = Category::active()->select('name'
     }
 
     function campaignShow($slug) {
-$pageTitle        = 'Dettagli della campagna';        $campaignData     = Campaign::where('slug', 'LIKE',$slug)->firstOrFail();
+        $campaignData     = Campaign::where('slug', 'LIKE',$slug)->firstOrFail();
         $comments         = Comment::with('user')->where('campaign_id', $campaignData->id)->approve()->latest()->limit(6)->get();
         $commentCount     = Comment::where('campaign_id', $campaignData->id)->approve()->count();
         $authUser         = auth()->user();
         $relatedCampaigns = Campaign::where('category_id', $campaignData->category_id)->whereNot('slug', $campaignData->slug)->approve()->latest()->limit(4)->get();
+        $pageTitle        = $campaignData->name;
 
         $seoContents['keywords']           = $campaignData->meta_keywords ?? [];
         $seoContents['social_title']       = $campaignData->name;
