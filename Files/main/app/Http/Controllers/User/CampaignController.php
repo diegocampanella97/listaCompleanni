@@ -132,7 +132,7 @@ $pageTitle  = 'Crea Nuova Campagna';        $categories = Category::active()->ge
         $images = [];
 
         // Gallery images
-        $gallery = ["67ebb9a27d77a1743501730.png"];
+        $gallery = ["placeholder.png"];
 
         foreach ($images as $image) array_push($gallery, $image->image);
 
@@ -141,7 +141,7 @@ $pageTitle  = 'Crea Nuova Campagna';        $categories = Category::active()->ge
         $campaign->user_id     = $user_id;
         $campaign->category_id = request('category_id');
         
-        $campaign->image='sample.png';
+        $campaign->image='placeholder.png';
 
         $campaign->gallery     = $gallery;
         $campaign->name        = request('name');
