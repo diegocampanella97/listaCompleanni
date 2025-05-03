@@ -182,10 +182,10 @@ $pageTitle  = 'Campagne';        $categories = Category::active()->select('name'
 
         if (auth()->check()) {
             $adminNotification->user_id = auth()->id();
-            $adminNotification->title   = auth()->user()->fullname . ' has commented on a campaign.';
+            $adminNotification->title   = auth()->user()->fullname . ' ha commentato una campagna.';
         } else {
             $adminNotification->user_id = 0;
-            $adminNotification->title   = request('name') . ' has commented on a campaign.';
+            $adminNotification->title   = request('name') . ' ha commentato una campagna.';
         }
 
         $adminNotification->click_url = urlPath('admin.comments.index');
@@ -211,7 +211,7 @@ $pageTitle  = 'Campagne';        $categories = Category::active()->select('name'
 
         if (!$campaign) {
             return response()->json([
-                'message' => 'Campaign not found'
+                'message' => 'Campagna non trovata'
             ], 404);
         }
 
@@ -236,7 +236,7 @@ $pageTitle  = 'Campagne';        $categories = Category::active()->select('name'
             ]);
         } else {
             return response()->json([
-                'message' => 'No more comments found'
+                'message' => 'Nessun altro commento trovato'
             ], 404);
         }
     }
@@ -407,7 +407,7 @@ $pageTitle = 'Politica sui cookie';        $cookie    = SiteData::where('data_ke
         $subscriber->email = request('email');
         $subscriber->save();
 
-        return response()->json(['success' => 'Subscription successful']);
+        return response()->json(['success' => 'Iscrizione avvenuta con successo']);
     }
 
     function placeholderImage($size = null) {
