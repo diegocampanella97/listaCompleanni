@@ -273,7 +273,7 @@ $pageTitle       = 'Conferma della donazione';            $gatewayCurrency = $de
             'campaign_name'   => $deposit->campaign->name,
         ]);
 
-        $toast[]   = ['success', 'Your donation request has been taken. Please wait for admin response'];
+        $toast[]   = ['success', 'La tua richiesta di donazione è stata presa in carico. Attendi la risposta dell\'amministratore'];
         $routeName = auth()->check() ? 'user.donation.history' : 'campaign';
 
         return to_route($routeName)->withToasts($toast);
