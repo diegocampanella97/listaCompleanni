@@ -122,7 +122,7 @@ $pageTitle  = 'Campagne';        $categories = Category::active()->select('name'
 
         // Check whether user active or not
         if (auth()->check() && !auth()->user()->status) {
-            $toast[] = ['error', 'The user is banned'];
+            $toast[] = ['error', 'L\'utente è stato bannato'];
 
             return back()->withToasts($toast);
         }
@@ -131,14 +131,14 @@ $pageTitle  = 'Campagne';        $categories = Category::active()->select('name'
 
         // Check whether campaign found or not
         if (!$campaign) {
-            $toast[] = ['error', 'Campaign not found'];
+            $toast[] = ['error', 'Campagna non trovata'];
 
             return back()->withToasts($toast);
         }
 
         // Check whether campaign category active or not
         if (!$campaign->category->status) {
-            $toast[] = ['error', 'Campaign category is not active'];
+            $toast[] = ['error', 'La categoria della campagna non è attiva'];
 
             return back()->withToasts($toast);
         }
@@ -149,14 +149,14 @@ $pageTitle  = 'Campagne';        $categories = Category::active()->select('name'
             !$campaign->isRunning() || 
             $campaign->isExpired()
         ) {
-            $toast[] = ['error', 'Campaign is unavailable right now'];
+            $toast[] = ['error', 'La campagna non è disponibile in questo momento'];
 
             return back()->withToasts($toast);
         }
 
         // Check whether user commenting on his/her own campaign
         if (auth()->check() && $campaign->user_id == auth()->id()) {
-            $toast[] = ['error', 'You can\'t comment on your own campaign'];
+            $toast[] = ['error', 'Non puoi commentare la tua stessa campagna'];
 
             return back()->withToasts($toast);
         }
@@ -191,7 +191,7 @@ $pageTitle  = 'Campagne';        $categories = Category::active()->select('name'
         $adminNotification->click_url = urlPath('admin.comments.index');
         $adminNotification->save();
 
-        $toast[] = ['success', 'Your comment has submitted. Please wait for admin approval'];
+        $toast[] = ['success', 'Il tuo commento è stato inviato. Attendi l\'approvazione dell\'amministratore'];
 
         return back()->withToasts($toast);
     }
