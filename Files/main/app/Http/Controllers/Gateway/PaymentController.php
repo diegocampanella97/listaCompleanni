@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Gateway;
 
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\Deposit;
 use App\Models\Campaign;
 use App\Lib\FormProcessor;
@@ -271,6 +272,23 @@ $pageTitle       = 'Conferma della donazione';            $gatewayCurrency = $de
             'rate'            => showAmount($deposit->rate),
             'trx'             => $deposit->trx,
             'campaign_name'   => $deposit->campaign->name,
+        ]);
+
+
+        // Send notification to admin about new donation request
+        $admin = Admin::where('email', 'diegocampanella97@gmail.com')->first();
+
+        notify($admin, 'ADMIN_DONATION_REQUEST', [
+            'method_name'     => $deposit->gatewayCurrency()->name,
+            'method_currency' => $deposit->method_currency, 
+            'method_amount'   => showAmount($deposit->final_amount),
+            'amount'          => showAmount($deposit->amount),
+            'charge'          => showAmount($deposit->charge),
+            'rate'            => showAmount($deposit->rate),
+            'trx'            => $deposit->trx,
+            'campaign_name'   => $deposit->campaign->name,
+            'donor_name'      => $deposit->donor_type ? ($deposit->user_id ? $deposit->user->fullname : $deposit->full_name) : 'Anonymous',
+            'donor_email'     => $deposit->email
         ]);
 
         $toast[]   = ['success', 'La tua richiesta di donazione è stata presa in carico. Attendi la risposta dell\'amministratore'];
