@@ -91,12 +91,19 @@
                 <h3 class="title">@lang('Basic Information')</h3>
             </div>
             <div class="card-body">
-                <div class="d-flex justify-content-center">
+
+                <div class="d-flex justify-content-center mb-3">
+                    <a href="{{ route('campaign.show', $campaign->slug) }}" target="_blank" class="btn btn--sm btn--base">
+                        <i class="ti ti-external-link"></i> @lang('Apri Link Campagna')
+                    </a>
+                </div>
+
+                <div class="d-flex justify-content-center mb-3">
                     <button id="sendWhatsappLink" class="btn btn--sm btn--success">
                         <i class="ti ti-brand-whatsapp"></i> @lang('Invia Link su WhatsApp')
                     </button>
                 </div>
-                <div class="d-flex justify-content-center mb-5">
+                <div class="d-flex justify-content-center mb-3">
                     <div id="qrcode">
                         <div class="d-flex justify-content-center mb-2">
                             <button id="printQrCode" class="btn btn--sm btn--base mt-3">
