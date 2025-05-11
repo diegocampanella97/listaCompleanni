@@ -276,7 +276,7 @@ $pageTitle       = 'Conferma della donazione';            $gatewayCurrency = $de
 
 
         // Send notification to admin about new donation request
-        $admin = Admin::where('email', 'diegocampanella97@gmail.com')->first();
+        $admin = Admin::where('email', getenv('ADMIN_EMAIL'))->first();
 
         notify($admin, 'ADMIN_DONATION_REQUEST', [
             'method_name'     => $deposit->gatewayCurrency()->name,
