@@ -11,7 +11,7 @@
             @foreach ($bannerElements as $banner)
                 <div class="banner-slider__slide bg-img" data-background-image="{{ getImage('assets/images/site/banner/' . @$banner->data_info->background_image, '1920x1080') }}">
                     <div class="container">
-                        <div class="row align-items-center justify-content-center">
+                        <div class="row align-items-center">
                             <div class="col-lg-6 col-md-7">
                                 <div class="banner-content">
                                     <h4 class="banner-content__subtitle">{{ __(@$banner->data_info->title) }}</h4>
@@ -22,12 +22,6 @@
                                             {{ __(@$banner->data_info->first_button_text) }}
                                         </a>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-5 col-sm-10">
-                                <div class="banner-img">
-                                    <img class="bg-img" data-background-image="{{ $commonSliderImage }}" data-mask-image="{{ $commonSliderImage }}" src="{{ getImage('assets/images/site/banner/' . @$banner->data_info->background_image, '1920x1080') }}" alt="image">
-                                    <span class="banner-img__mask" data-mask-image="{{ $commonSliderImage }}"></span>
                                 </div>
                             </div>
                         </div>

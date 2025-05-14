@@ -18,6 +18,32 @@
 
         @stack('page-style-lib')
         @stack('page-style')
+
+        <style>
+            .banner-slider__slide.bg-img::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: hsl(var(--black) / 0.4);
+                z-index: -1;
+            }
+
+            .banner-content__subtitle {
+                width: max-content;
+                color: transparent;
+                background-image: linear-gradient(to left, hsl(var(--base)), hsl(var(--base)));
+                -webkit-background-clip: text;
+                background-clip: text;
+                font-size: 1.5625rem;
+                border-radius: 3px;
+                font-weight: 600;
+                transform: translateX(100px);
+                opacity: 0;
+            }
+        </style>
     </head>
 
     <body>
