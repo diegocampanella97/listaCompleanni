@@ -175,6 +175,7 @@
                                 </a>
                             </div>
                             <p class="footer-item__desc">{{ __(@$footerContent->data_info->footer_text) }}</p>
+                            <p class="footer-item__desc my-2 text-success small"><strong>Seguici su: Instagram e Facebook</strong></p>
                             <ul class="social-list">
                                 @foreach ($footerElements as $socialInfo)
                                     <li class="social-list__item">
