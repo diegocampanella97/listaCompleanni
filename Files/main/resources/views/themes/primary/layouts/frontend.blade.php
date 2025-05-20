@@ -171,11 +171,11 @@
                         <div class="footer-item">
                             <div class="footer-item__logo">
                                 <a href="{{ route('home') }}">
-                                    <img src="{{ getImage(getFilePath('logoFavicon') . '/logo_dark.png') }}" alt="footer logo">
+                                    <img src="{{ getImage(getFilePath('logoFavicon') . '/logo_light.png') }}" alt="footer logo">
                                 </a>
                             </div>
                             <p class="footer-item__desc">{{ __(@$footerContent->data_info->footer_text) }}</p>
-                            <p class="footer-item__desc my-2 text-success small"><strong>Seguici su: Instagram e Facebook</strong></p>
+                            <p class="footer-item__desc my-2 text-success small text-white"><strong>Seguici su:</strong></p>
                             <ul class="social-list">
                                 @foreach ($footerElements as $socialInfo)
                                     <li class="social-list__item">

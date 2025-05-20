@@ -4009,7 +4009,7 @@ body .select2-container--default.select2-container--disabled .select2-selection-
 /* ================ Top Header End Here ================ */
 /* ============= Footer Start Here ======================= */
 .footer-area {
-    background-color: hsl(var(--black)/0.85);
+    background-color: hsl(var(--base));
     padding-top: 100px;
     margin-top: auto;
     position: relative;
@@ -4060,7 +4060,7 @@ body .select2-container--default.select2-container--disabled .select2-selection-
 }
 
 .footer-item {
-    color: hsl(var(--white)/0.75);
+    color: hsl(var(--white)) !important;
 }
 
 .footer-item__logo {
@@ -4075,7 +4075,7 @@ body .select2-container--default.select2-container--disabled .select2-selection-
 }
 
 .footer-item__title {
-    color: hsl(var(--white));
+    color: hsl(var(--white)) !important;
     padding-bottom: 10px;
     margin-bottom: 25px;
     position: relative;
@@ -4123,11 +4123,11 @@ body .select2-container--default.select2-container--disabled .select2-selection-
 }
 
 .footer-menu__link {
-    color: hsl(var(--white)/0.75);
+    color: hsl(var(--white)) !important;
 }
 
 .footer-menu__link:hover {
-    color: hsl(var(--base));
+    color: hsl(var(--base-two)) !important;
     text-decoration: underline;
 }
 
@@ -4135,7 +4135,7 @@ body .select2-container--default.select2-container--disabled .select2-selection-
 .footer-contact-menu__item {
     display: flex;
     padding-bottom: 12px;
-    color: hsl(var(--white)/0.75);
+    color: hsl(var(--white)) !important;
 }
 
 .footer-contact-menu__item:last-child {
